@@ -63,13 +63,29 @@ const Tablelaporan = () => {
     };
     return (
         <>
-            <NavLink
-                to='/app/karyawan/add'
-                className={'btn btn-primary'}
-            >
-            </NavLink>
+
             <MUIDataTable
-                title={'Laporan data kemajuan siswa'}
+                title={
+                    <>
+                        <div className="row">
+                            <div className="col-md-4">
+
+                                <input type={'date'} className="form-control" />
+                            </div>
+                            <div className="col-md-4">
+
+                                <input type={'date'} className="form-control" />
+                            </div>
+
+                            <NavLink
+                                to='/app/karyawan/add'
+                                className={'btn btn-primary'}
+                            >
+                                Search laporan
+                    </NavLink>
+                        </div>
+                    </>
+                }
                 data={data}
                 columns={columns}
                 options={options}

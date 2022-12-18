@@ -25,6 +25,7 @@ import Raport from './pages/raport/Raport';
 import Laporan from './pages/laporan/Laporan';
 import SiswaForm from './pages/siswa/SiswaForm';
 import KaryawanForm from './pages/karyawan/KaryawanForm';
+import Identitas from './pages/Identitas';
 
 export default function Web() {
     const [user, setUser] = useState(null);
@@ -44,7 +45,7 @@ export default function Web() {
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
                     <Route path='/app/raport' element={<ProtectedRoute><Raport /></ProtectedRoute>} />
 
-
+                    <Route path='/app/identitas' element={<ProtectedRoute><Identitas /></ProtectedRoute>} />
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
                     <Route path='/app/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path='/app/level' element={<ProtectedRoute><Level /></ProtectedRoute>} />

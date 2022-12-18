@@ -87,12 +87,12 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Akses Login',
-                path: '/app/loginakses',
+                path: '/app/user',
                 icon: <IoIcons.IoIosPaper />
             },
             {
                 title: 'Indentitas Aplikasi',
-                path: '/messages/identitas',
+                path: '/app/identitas',
                 icon: <IoIcons.IoIosPaper />
             }
         ]
@@ -222,12 +222,12 @@ export const Guru = [
         subNav: [
             {
                 title: 'Akses Login',
-                path: '/app/loginakses',
+                path: '/app/user',
                 icon: <IoIcons.IoIosPaper />
             },
             {
                 title: 'Indentitas Aplikasi',
-                path: '/messages/identitas',
+                path: '/app/identitas',
                 icon: <IoIcons.IoIosPaper />
             }
         ]
