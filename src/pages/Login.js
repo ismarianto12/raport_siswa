@@ -86,7 +86,10 @@ export default function Login() {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-9 col-lg-8 mx-auto">
-                                    <h3 className="login-heading mb-4"><Icon.Users /> Login </h3>
+                                    <center>
+                                        <img src="/logo.png" className={'img-responsive'} style={{ 'width': '100px' }} /></center>
+                                    <h3 className="text-center login-heading mb-4"><Icon.Users /> Login </h3>
+
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-floating mb-3">
                                             <input type="text" className="form-control" id="username" onChange={onChange} value={value.username} placeholder="" />

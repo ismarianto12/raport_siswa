@@ -1,7 +1,6 @@
 import React from 'react'
 import { Helmet } from "react-helmet";
 import Chart from "react-apexcharts";
-// import { schema } from "./schema";
 const dataseries = {
     monthDataSeries1: {
         prices: [
@@ -488,6 +487,40 @@ const Error = () => {
         </Helmet>
 
         <div className="row">
+            <div className="col-md-6 grid-margin transparent">
+                <div className="row">
+
+                    <div className="col-md-6 mb-4 stretch-card transparent">
+                        <img src="/logo.png" className={'img-responsive'} style={{ 'width': '100px' }} />
+                    </div>
+                    <div className="col-md-6 mb-4 stretch-card transparent">
+                        <h4>Dashboard Apps </h4>
+                        <br />
+                        <p>Sistem Rapor siswa</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div className="card card-light-blue">
+                            <div className="card-body">
+                                <p className="mb-4">Status Penilaian</p>
+                                <p className="fs-30 mb-2">34040</p>
+                                <p>2.00% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-6 stretch-card transparent">
+                        <div className="card card-light-danger">
+                            <div className="card-body">
+                                <p className="mb-4">Data Pegawai</p>
+                                <p className="fs-30 mb-2">47033</p>
+                                <p>0.22% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="col-md-6 grid-margin stretch-card">
                 <div className="card tale-bg">
                     <div className="card-people mt-auto">
@@ -497,18 +530,19 @@ const Error = () => {
                             type="line"
                             height="350"
                         />
-  
 
-                         
+
+
                     </div>
                 </div>
             </div>
             <div className="col-md-6 grid-margin transparent">
                 <div className="row">
+
                     <div className="col-md-6 mb-4 stretch-card transparent">
                         <div className="card card-tale">
                             <div className="card-body">
-                                <p className="mb-4">Today’s Bookings</p>
+                                <p className="mb-4">Jumlah Siswa</p>
                                 <p className="fs-30 mb-2">4006</p>
                                 <p>10.00% (30 days)</p>
                             </div>
@@ -517,7 +551,7 @@ const Error = () => {
                     <div className="col-md-6 mb-4 stretch-card transparent">
                         <div className="card card-dark-blue">
                             <div className="card-body">
-                                <p className="mb-4">Total Bookings</p>
+                                <p className="mb-4">Data Guru</p>
                                 <p className="fs-30 mb-2">61344</p>
                                 <p>22.00% (30 days)</p>
                             </div>
@@ -528,7 +562,7 @@ const Error = () => {
                     <div className="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                         <div className="card card-light-blue">
                             <div className="card-body">
-                                <p className="mb-4">Number of Meetings</p>
+                                <p className="mb-4">Status Penilaian</p>
                                 <p className="fs-30 mb-2">34040</p>
                                 <p>2.00% (30 days)</p>
                             </div>
@@ -537,7 +571,7 @@ const Error = () => {
                     <div className="col-md-6 stretch-card transparent">
                         <div className="card card-light-danger">
                             <div className="card-body">
-                                <p className="mb-4">Number of Clients</p>
+                                <p className="mb-4">Data Pegawai</p>
                                 <p className="fs-30 mb-2">47033</p>
                                 <p>0.22% (30 days)</p>
                             </div>
@@ -545,7 +579,7 @@ const Error = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
 
 
     </>);
