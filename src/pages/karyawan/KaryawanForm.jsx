@@ -49,8 +49,6 @@ export default function KaryawanForm() {
     }
 
     const options = ['Pria', 'Wanita'];
-
-
     return (
         <>
             <Formik
@@ -72,9 +70,9 @@ export default function KaryawanForm() {
 
                     return (
                         <>
-                            <div style={{ 'backgrond': '#ffd' }}>
+                            <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
                                 {`${action} Pegawai`}
-                                <Grid container spacing={2} columns={16}>
+                                <Grid container spacing={2} columns={18}>
                                     <Grid xs={8}>
                                         <TextField
                                             margin="normal"
@@ -92,7 +90,7 @@ export default function KaryawanForm() {
                                     <Grid xs={8}>
                                         <Autocomplete
                                             margin="normal"
-
+                                            fullWidth
                                             value={null}
                                             id="controllable-states-demo"
                                             options={options}
