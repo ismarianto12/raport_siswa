@@ -63,15 +63,17 @@ const Karyawantable = () => {
     };
     return (
         <>
-            <NavLink
-                to='/app/karyawan/add'
-                className={'btn btn-primary'}
-            >
-                Tambah data
-        </NavLink>
+
 
             <MUIDataTable
-                title={'Data Mata Pelajajan'}
+                title={<>
+                    <NavLink
+                        to='/app/karyawan/add'
+                        className={'btn btn-primary'}
+                    >
+                        Tambah data
+        </NavLink>
+                </>}
                 data={data}
                 columns={columns}
                 options={options}

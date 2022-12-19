@@ -26,6 +26,7 @@ import Laporan from './pages/laporan/Laporan';
 import SiswaForm from './pages/siswa/SiswaForm';
 import KaryawanForm from './pages/karyawan/KaryawanForm';
 import Identitas from './pages/Identitas';
+// import cetakRaport from './pages/raport/cetakRaport';
 
 export default function Web() {
     const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ export default function Web() {
                     <Route path='/app/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path='/app/level' element={<ProtectedRoute><Level /></ProtectedRoute>} />
                     <Route path='/app/level/create' element={<ProtectedRoute><FormLevel /></ProtectedRoute>} />
+                    {/* <Route path='/app/cetak/raport' element={<ProtectedRoute><cetakRaport /></ProtectedRoute>} /> */}
 
                 </Route>
 
