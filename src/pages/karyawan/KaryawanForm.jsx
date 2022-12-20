@@ -2,10 +2,13 @@ import Karyawantable from "../../components/karyawan";
 import { useEffect, useState } from 'react'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
+
+
 import TextField from '@mui/material/TextField'
+
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
-import { Formik } from 'formik'
+import { Form, Formik, Field } from 'formik'
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -17,8 +20,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 export default function KaryawanForm() {
 
     const [reqdata, setReqdata] = useState([]);
-    const [karyawandata, setkaryawandata] = useState({});
-    const [action, setActon] = useState('')
+    const [karyawandata, setkaryawandata] = useState();
+    const [action, setActon] = useState([])
 
     let params = useParams()
     let navigate = useNavigate()
@@ -52,166 +55,182 @@ export default function KaryawanForm() {
     return (
         <>
             <Formik
-                initialValues={karyawandata}
+                initialValues={
+                    {
+                        nama: '',
+                        jk: '',
+                        alamat: '',
+                        level: '',
+                        status_pegawai: ''
+                    }
+                }
                 validate={(values) => {
                     const errors = {};
-                    // if (!values.comboboxField) {
-                    //     errors.comboboxField = 'Required';
-                    // }
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    console.log(values)
+                    console.log(values, 'formik value get ..')
                 }}
             >
 
-                {({ handleSubmit, errors }) => {
-                    console.log(errors)
+                {({ values, onSubmit, errors }) => {
 
                     return (
                         <>
-                            <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
-                                {`${action} Pegawai`}
-                                <Grid container spacing={2} columns={18}>
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="Nama"
-                                            name="nama"
-                                            autoComplete="email"
-                                            autoFocus
+                            <Form>
+                                <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
+                                    {`${action} Pegawai`}
+                                    <hr />
+                                    <Grid container spacing={2} columns={18}>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
 
-                                        />
+                                                as={TextField}
+                                                type="text"
+                                                label="nama"
+                                                margin="normal"
+                                                name="nama"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                autoFocus
+                                            />
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={Autocomplete}
+                                                margin="normal"
+                                                fullWidth
+                                                name="jk"
+                                                value={null}
+                                                id="controllable-states-demo"
+                                                options={options}
+                                                renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
+                                            />
+                                        </Grid>
+
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                type="text"
+                                                label="nama"
+                                                margin="normal"
+                                                name="alamat"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                autoFocus
+                                            />
+
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label='Status Kepegawaian'
+                                                name="status_pegawai"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+                                        </Grid>
+
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label="NIK"
+                                                name="nik"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+                                        </Grid>
+
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label="NIP"
+                                                name="nip"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+                                        </Grid>
+
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label="Email Address"
+                                                name="email"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label="No Hanphone  "
+                                                name="hp"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+
+                                        </Grid>
 
                                     </Grid>
-                                    <Grid xs={8}>
-                                        <Autocomplete
-                                            margin="normal"
-                                            fullWidth
-                                            value={null}
-                                            id="controllable-states-demo"
-                                            options={options}
-                                            renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
-                                        />
-                                    </Grid>
+                                    <hr />
+                                    <Container component="main" maxWidth="xs">
 
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="Alamat"
-                                            name="alamat"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-                                    </Grid>
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label='Status Kepegawaian'
-                                            name="status_pegawai"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-                                    </Grid>
-
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="NIK"
-                                            name="nik"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-                                    </Grid>
-
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="NIP"
-                                            name="nip"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-                                    </Grid>
-
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="Email Address"
-                                            name="email"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-
-                                    </Grid>
-                                    <Grid xs={8}>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            id="email"
-                                            label="No Hanphone  "
-                                            name="hp"
-                                            autoComplete="email"
-                                            autoFocus
-
-                                        />
-
-
-                                    </Grid>
-
-                                </Grid>
-                                <Container component="main" maxWidth="xs">
-
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        color="primary"
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
-                                    >
-                                        Simpan data
+                                        <Button
+                                            type="submit"
+                                            // fullWidth
+                                            color="primary"
+                                            onSubmit={onSubmit}
+                                            variant="contained"
+                                        // sx={{ mt: 5, mb: 2 }}
+                                        >
+                                            Simpan data
             </Button>
-
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        onClick={back}
-                                        color="secondary"
-                                        variant="contained"
-                                    >
-                                        Batal
+&nbsp;
+                                        <Button
+                                            type="submit"
+                                            // fullWidth
+                                            onClick={back}
+                                            color="secondary"
+                                            variant="contained"
+                                        >
+                                            Batal
             </Button>
-                                </Container>
-                            </div>
+                                    </Container>
+                                </div>
+                            </Form>
                         </>
                     )
                 }}

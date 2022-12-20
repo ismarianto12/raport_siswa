@@ -1,92 +1,177 @@
-import React, { useEffect, useState } from 'react'
+import Karyawantable from "../../components/karyawan";
+import { useEffect, useState } from 'react'
+import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
+
+
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 
-import { useParams, useSearchParams } from 'react-router-dom'
-import * as Icon from 'react-feather'
+import Fab from '@mui/material/Fab';
+import Button from '@mui/material/Button';
+import { Form, Formik, Field } from 'formik'
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
 
-const MapelAdd = () => {
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
+import Autocomplete from '@mui/material/Autocomplete';
+
+
+export default function MapelAdd() {
+
+    const [reqdata, setReqdata] = useState([]);
+    const [karyawandata, setkaryawandata] = useState();
+    const [action, setActon] = useState([])
+
     let params = useParams()
-    const [title, setTitle] = useState('')
+    let navigate = useNavigate()
+
 
     useEffect(() => {
         const pathnya = params['*'].split('/')
         console.log(pathnya[0])
         if (pathnya == 'edit') {
-            setTitle('Edit')
+            setActon('Edit')
         } else {
-            setTitle('Tambah Data')
-
+            setActon('Tambah Data')
         }
 
+        const karyawan = {
+            nama: reqdata.nama,
+            jk: reqdata.jk,
+            alamat: reqdata.alamat,
+            level: reqdata.level,
+            status_pegawai: reqdata.status_pegawai
+        }
+        setkaryawandata(karyawan)
+        console.log(karyawandata, 'data karyawan')
     }, []);
+
+    const back = () => {
+        navigate('/app/karyawan')
+    }
+
+    const options = ['Pria', 'Wanita'];
     return (
-        <div className="row">
-            <div className="col-12">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="row">
-                            <h3><Icon.Users />{title}</h3>
+        <>
+            <Formik
+                initialValues={
+                    {
+                        id_pegawai: '',
+                        kode: '',
+                        mapel: '',
+                        kkm: '',
+                        kurikulum: '',
+                    }
+                }
+                validate={(values) => {
+                    const errors = {};
+                    return errors;
+                }}
+                onSubmit={(values) => {
+                    console.log(values, 'formik value get ..')
+                }}
+            >
 
+                {({ values, onSubmit, errors }) => {
 
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-                                <div className="container">
-                                    <TextField
-                                        id="standard-password-input"
-                                        label="Kode Mapel"
-                                        type="text"
-                                        autoComplete="current-password"
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        id="standard-password-input"
-                                        label="Nama Mapel"
-                                        type="text"
-                                        autoComplete="current-password"
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        id="standard-password-input"
-                                        label="Standar KKM Mapel"
-                                        type="text"
-                                        autoComplete="current-password"
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        id="standard-password-input"
-                                        label="Guru Pengampu KKM Mapel"
-                                        type="text"
-                                        autoComplete="current-password"
-                                        variant="standard"
-                                    />
+                    return (
+                        <>
+                            <Form>
+                                <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
+                                    {`${action} Mata Pelajaran`}
                                     <hr />
-                                    <Button variant="contained" >
-                                        Save
-</Button>
+                                    <Grid container spacing={2} columns={18}>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                type="text"
+                                                label="kode"
+                                                margin="normal"
+                                                name="kode"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                autoFocus
+                                            />
+                                        </Grid>
+
+
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                type="text"
+                                                label="Mata Pelajaran"
+                                                margin="normal"
+                                                name="mapel"
+                                                required
+                                                fullWidth
+                                                autoFocus
+                                            />
+
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="kkm"
+                                                required
+                                                fullWidth
+                                                id="kkm"
+                                                label='KKM Mata Pelajaran'
+                                                name="kkm"
+                                                autoComplete="email"
+                                                autoFocus
+
+                                            />
+
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={Autocomplete}
+                                                margin="normal"
+                                                fullWidth
+                                                name="id_pegawai"
+                                                value={null}
+                                                id="controllable-states-demo"
+                                                options={options}
+                                                renderInput={(params) => <TextField {...params} label="Guru Pengampu" />}
+                                            />
+                                        </Grid>
+
+                                        <hr />
+                                        <br /><br />
+                                        <br /><br />                                        <br /><br />
+
+                                        <Container component="main" maxWidth="xs">
+
+                                            <Button
+                                                type="submit"
+                                                // fullWidth
+                                                color="primary"
+                                                onSubmit={onSubmit}
+                                                variant="contained"
+                                            // sx={{ mt: 5, mb: 2 }}
+                                            >
+                                                Simpan data
+            </Button>
 &nbsp;
-                            <Button variant="contained" style={{ "background": "orange" }}>
-                                        Cancel
-</Button>
-
-
+                                        <Button
+                                                type="submit"
+                                                // fullWidth
+                                                onClick={back}
+                                                color="secondary"
+                                                variant="contained"
+                                            >
+                                                Batal
+            </Button>
+                                        </Container>
+                                    </Grid>
                                 </div>
-                            </Box>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    )
+                            </Form>
+                        </>
+                    )
+                }}
+            </Formik>
+        </>
+    );
 }
-
-export default MapelAdd
