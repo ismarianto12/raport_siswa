@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom'
 import Mapeltable from '../../components/mapeltable';
 import Title from "../../components/Title";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Mapel() {
     return (
@@ -18,10 +21,12 @@ export default function Mapel() {
                                 </NavLink>
                         <div className="table-responsive">
                             <Mapeltable />
-                            
+
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
+
             </div>
 
         </>

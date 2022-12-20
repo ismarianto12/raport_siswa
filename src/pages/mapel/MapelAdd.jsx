@@ -15,7 +15,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function MapelAdd() {
 
@@ -69,7 +70,19 @@ export default function MapelAdd() {
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    console.log(values, 'formik value get ..')
+                    // console.log(values, 'formik value get ..')
+                    toast('🦄 Data berhasil di simpan!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    navigate('/master/mapel')
+
                 }}
             >
 
@@ -172,6 +185,8 @@ export default function MapelAdd() {
                     )
                 }}
             </Formik>
+            <ToastContainer />
+
         </>
     );
 }

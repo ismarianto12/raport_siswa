@@ -52,6 +52,7 @@ export default function Web() {
                     <Route path='/app/level' element={<ProtectedRoute><Level /></ProtectedRoute>} />
                     <Route path='/app/level/create' element={<ProtectedRoute><FormLevel /></ProtectedRoute>} />
                     {/* <Route path='/app/cetak/raport' element={<ProtectedRoute><cetakRaport /></ProtectedRoute>} /> */}
+                    <Route path='/app/persentase/penilaian' element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
 
                 </Route>
 
@@ -66,8 +67,8 @@ export default function Web() {
                     <Route path='/master/mapel' element={<ProtectedRoute><Mapel /></ProtectedRoute>} />
                     <Route path='/master/mapel/*' element={<ProtectedRoute><MapelAdd /></ProtectedRoute>} />
                     <Route path='/master/laporan' element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
-
-                </Route>
+  
+                 </Route>
 
                 <Route>
                     <Route path='login' element={<Login setUser={setUser}></Login>} />

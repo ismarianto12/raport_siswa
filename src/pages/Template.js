@@ -25,18 +25,18 @@ const Template = ({ Outlet }) => {
     const Logout = () => {
 
         return Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Kamu yakin ?',
+            text: "Anda Yakin Log out dari aplikasi",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Iya'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Success !',
+                    'Anda berhasil logout dengan selamat.',
                     'success'
                 )
                 localStorage.removeItem('mytime')
