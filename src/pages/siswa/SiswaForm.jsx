@@ -15,6 +15,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    createsiswa, updatesiswa
+} from '../../actions/Siswa'
 
 
 export default function SiswaForm() {
@@ -22,6 +26,8 @@ export default function SiswaForm() {
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
+    const dispatch = useDispatch()
+
 
     let params = useParams()
     let navigate = useNavigate()
@@ -49,7 +55,7 @@ export default function SiswaForm() {
 
     const back = () => {
         navigate('/master/siswa')
-    } 
+    }
     const options = ['Pria', 'Wanita'];
     return (
         <>
@@ -72,7 +78,10 @@ export default function SiswaForm() {
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    console.log(values, 'formik value get ..')
+                    const app = dispatch(createsiswa(values))
+                    navigate('/master/siswa')
+                    console.log(app, 'asdada')
+
                 }}
             >
 

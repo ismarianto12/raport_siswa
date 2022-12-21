@@ -1,70 +1,93 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MUIDataTable from "mui-datatables";
+import axios from 'axios'
+import Swal from 'sweetalert2';
+
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    createsiswa, deletesiswa, updatesiswa
+} from '../actions/Siswa'
+import { connect } from 'react-redux'
+
 
 class TableSiswa extends React.Component {
-    render() {
-        const columns = ["Name", "Title", "Location", "Age", "Salary"];
-        const data = [
-            ["Gabby George", "Business Analyst", "Minneapolis", 30, "$100,000"],
-            ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
-            ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
-            ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
-            ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
-            [
-                "Blake Duncan",
-                "Business Management Analyst",
-                "San Diego",
-                65,
-                "$94,000"
-            ],
-            ["Frankie Parry", "Agency Legal Counsel", "Jacksonville", 71, "$210,000"],
-            ["Lane Wilson", "Commercial Specialist", "Omaha", 19, "$65,000"],
-            ["Robin Duncan", "Business Analyst", "Los Angeles", 20, "$77,000"],
-            ["Mel Brooks", "Business Consultant", "Oklahoma City", 37, "$135,000"],
-            ["Harper White", "Attorney", "Pittsburgh", 52, "$420,000"],
-            ["Kris Humphrey", "Agency Legal Counsel", "Laredo", 30, "$150,000"],
-            ["Frankie Long", "Industrial Analyst", "Austin", 31, "$170,000"],
-            ["Brynn Robbins", "Business Analyst", "Norfolk", 22, "$90,000"],
-            ["Justice Mann", "Business Consultant", "Chicago", 24, "$133,000"],
-            [
-                "Addison Navarro",
-                "Business Management Analyst",
-                "New York",
-                50,
-                "$295,000"
-            ],
-            ["Jesse Welch", "Agency Legal Counsel", "Seattle", 28, "$200,000"],
-            ["Eli Mejia", "Commercial Specialist", "Long Beach", 65, "$400,000"],
-            ["Gene Leblanc", "Industrial Analyst", "Hartford", 34, "$110,000"],
-            ["Danny Leon", "Computer Scientist", "Newark", 60, "$220,000"],
-            ["Lane Lee", "Corporate Counselor", "Cincinnati", 52, "$180,000"],
-            ["Jesse Hall", "Business Analyst", "Baltimore", 44, "$99,000"],
-            ["Danni Hudson", "Agency Legal Counsel", "Tampa", 37, "$90,000"],
-            ["Terry Macdonald", "Commercial Specialist", "Miami", 39, "$140,000"],
-            ["Justice Mccarthy", "Attorney", "Tucson", 26, "$330,000"],
-            ["Silver Carey", "Computer Scientist", "Memphis", 47, "$250,000"],
-            ["Franky Miles", "Industrial Analyst", "Buffalo", 49, "$190,000"],
-            ["Glen Nixon", "Corporate Counselor", "Arlington", 44, "$80,000"],
-            [
-                "Gabby Strickland",
-                "Business Process Consultant",
-                "Scottsdale",
-                26,
-                "$45,000"
-            ],
-            ["Mason Ray", "Computer Scientist", "San Francisco", 39, "$142,000"]
-        ];
+    constructor(props) {
+        super(props);
+        this.state = { data: [] };
+        this.array = [];
+    }
+    componentDidMount() {
+        this.fetdata()
+    }
+    fetdata() {
+        const datanya = [];
+        const data_row_array = [];
+        axios.get('http://localhost/skripsi_api/public/v1/siswa')
+            .then(response => {
+                this.setState({ data: response.data });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
+
+    delete = async (e) => {
+        return Swal.fire({
+            title: 'Kamu yakin ?',
+            text: "Hapus data ini",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.props.dispatch(deletesiswa(e))
+                this.fetdata()
+            }
+        })
+    }
+
+
+    render() {
+
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk, result.id]);
+        const columns = [
+            { name: 'Nama' }, { name: 'J/K' }, { name: 'NISN' }, { name: 'Kelas' }, { name: 'Tahun Masuk' }, {
+                name: "Action",
+                options: {
+                    filter: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        return (
+                            <>
+                                <button className="btn btn-danger btn-sm" onClick={() => {
+                                    this.delete(tableMeta.rowData[5])
+                                }} >
+                                    Delete
+                            </button>
+                                <button className="btn btn-primary btn-sm"
+                                >Edit</button>
+                            </>
+                        );
+                    }
+
+                }
+            }
+        ]
         const options = {
+            filter: true,
             filterType: "dropdown",
-            responsive: "scroll"
+            responsive: "",
+            selectableRows: false
         };
 
+        const datanya = this.array
         return (
             <MUIDataTable
                 title={'Data Siswa'}
-                data={data}
+                data={datanya}
                 columns={columns}
                 options={options}
             />
@@ -72,4 +95,11 @@ class TableSiswa extends React.Component {
     }
 }
 
-export default TableSiswa
+const mapDispatchToProps = dispatch => ({
+    dispatch
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(TableSiswa);
