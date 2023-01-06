@@ -15,6 +15,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
+import Masterdata from '../../components/Masterdata'
+
 
 
 export default function KaryawanForm() {
@@ -22,11 +24,9 @@ export default function KaryawanForm() {
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
-
+    const [jk, setJk] = useState('');
     let params = useParams()
     let navigate = useNavigate()
-
-
     useEffect(() => {
         const pathnya = params['*'].split('/')
         console.log(pathnya[0])
@@ -68,12 +68,13 @@ export default function KaryawanForm() {
                     const errors = {};
                     return errors;
                 }}
-                onSubmit={(values) => {
+                onSubmit={(values, { setFieldValue }) => {
+                    setFieldValue('jk', jk)
                     console.log(values, 'formik value get ..')
                 }}
             >
 
-                {({ values, onSubmit, errors }) => {
+                {({ values, onSubmit, errors, setFieldValue }) => {
 
                     return (
                         <>
@@ -102,7 +103,11 @@ export default function KaryawanForm() {
                                                 margin="normal"
                                                 fullWidth
                                                 name="jk"
-                                                value={null}
+                                                onChange={(e, val) => {
+                                                    setJk(val)
+                                                }
+                                                }
+                                                value={jk}
                                                 id="controllable-states-demo"
                                                 options={options}
                                                 renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
@@ -124,18 +129,12 @@ export default function KaryawanForm() {
 
                                         </Grid>
                                         <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label='Status Kepegawaian'
-                                                name="status_pegawai"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
+                                            <Masterdata
+                                                name={`pengampu`}
+                                                placeholder={'Status Kepeagawaian'}
+                                                id={`id_pengampu`}
+                                                multiple={true}
+                                                fieldname={'pegawai'} />
 
                                         </Grid>
 

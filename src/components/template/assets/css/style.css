@@ -32844,13 +32844,8 @@ div.tagsinput span.tag a {
 }
 
 .main-panel {
-  transition            : width 0.25s ease, margin 0.25s ease;
-  width                 : 100%;
-  min-height            : calc(100vh - 60px);
-  display               : -webkit-flex;
-  display               : flex;
-  -webkit-flex-direction: column;
-  flex-direction        : column;
+  transition: width 0.25s ease, margin 0.25s ease;
+  width     : 100%;
 }
 
 @media (max-width: 991px) {
@@ -33290,9 +33285,9 @@ div.tagsinput span.tag a {
 }
 
 @media (max-width: 991px) {
-  .navbar .navbar-menu-wrapper .navbar-toggler:not(.navbar-toggler-right) {
+  /* .navbar .navbar-menu-wrapper .navbar-toggler:not(.navbar-toggler-right) {
     display: none;
-  }
+  } */
 }
 
 .sidebar-icon-only .navbar .navbar-menu-wrapper .navbar-toggler:not(.navbar-toggler-right) {
@@ -36329,6 +36324,10 @@ div.tagsinput span.tag a {
   #settings-trigger {
     display: none;
   }
+
+  .fixed_navbar {
+    display: none;
+  }
 }
 
 #settings-trigger svg {
@@ -36343,4 +36342,11 @@ div.tagsinput span.tag a {
   /* position: fixed; */
   top        : 0;
   overflow   : auto;
+}
+
+
+.table-responsive>th {
+
+  color : #fff;
+  border: 1px solid;
 }

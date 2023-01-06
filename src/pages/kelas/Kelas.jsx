@@ -7,12 +7,11 @@ import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux'
 import {
     createsiswa, deletesiswa, updatesiswa
-} from '../actions/Siswa'
+} from '../../actions/Siswa'
 import { connect } from 'react-redux'
-import Action from './Action'
+import Action from "../../components/Action";
 
-
-class TableSiswa extends React.Component {
+class Karyawan extends React.Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
@@ -27,7 +26,7 @@ class TableSiswa extends React.Component {
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get(`${process.env.REACT_APP_API_URL}/v1/siswa`)
+        axios.get('${process.env.REACT_APP_API_URL}/v1/kelas')
             .then(response => {
                 this.setState({ data: response.data });
             })
@@ -55,9 +54,9 @@ class TableSiswa extends React.Component {
     }
     render() {
 
-        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk, result.id]);
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nip, result.status_pegawai, result.tahun_masuk, result.id]);
         const columns = [
-            { name: 'Nama' }, { name: 'J/K' }, { name: 'NISN' }, { name: 'Kelas' }, { name: 'Tahun Masuk' }, {
+            { name: 'Nama' }, { name: 'Kode' }, { name: 'Wali Kelas' }, {
                 name: "Action",
                 options: {
                     filter: true,
@@ -69,7 +68,8 @@ class TableSiswa extends React.Component {
                                 }} >
                                     Delete
                             </button>
-                                <Action url={`/master/siswa/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
+                                <Action url={`/master/karyawan/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
+
                             </>
                         );
                     }
@@ -87,7 +87,7 @@ class TableSiswa extends React.Component {
         const datanya = this.array
         return (
             <MUIDataTable
-                title={'Data Siswa'}
+                title={'Data Kelas'}
                 data={datanya}
                 columns={columns}
                 options={options}
@@ -101,4 +101,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(null, mapDispatchToProps)(TableSiswa)
+export default connect(null, mapDispatchToProps)(Karyawan)

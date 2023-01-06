@@ -16,17 +16,18 @@ import Mapel from './pages/mapel/Mapel'
 // action add mapel 
 import MapelAdd from './pages/mapel/MapelAdd'
 
-
 import Kurikulum from './pages/kurikulum/Kurikulum';
 import Karyawan from './pages/karyawan/Karyawan';
-// import KaryawanForm from './pages/karyawan/KaryawanForm';
 
 import Raport from './pages/raport/Raport';
 import Laporan from './pages/laporan/Laporan';
 import SiswaForm from './pages/siswa/SiswaForm';
 import KaryawanForm from './pages/karyawan/KaryawanForm';
 import Identitas from './pages/Identitas';
-// import cetakRaport from './pages/raport/cetakRaport';
+import Kelas from './pages/kelas/Kelas';
+import KelasForm from './pages/kelas/KelasForm';
+import RaportForm from './pages/raport/RaportForm';
+import PrintLaporan from './pages/PrintLaporan'
 
 export default function Web() {
     const [user, setUser] = useState(null);
@@ -43,8 +44,13 @@ export default function Web() {
                     <Route path='/app/karyawan' element={<ProtectedRoute><Karyawan /></ProtectedRoute>} />
                     <Route path='/app/karyawan/*' element={<ProtectedRoute><KaryawanForm /></ProtectedRoute>} />
 
+
+                    <Route path='/app/kelas' element={<ProtectedRoute><Kelas /></ProtectedRoute>} />
+                    <Route path='/app/kelas/*' element={<ProtectedRoute><KelasForm /></ProtectedRoute>} />
+
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
                     <Route path='/app/raport' element={<ProtectedRoute><Raport /></ProtectedRoute>} />
+                    <Route path='/app/raport/*' element={<ProtectedRoute><RaportForm /></ProtectedRoute>} />
 
                     <Route path='/app/identitas' element={<ProtectedRoute><Identitas /></ProtectedRoute>} />
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
@@ -67,11 +73,16 @@ export default function Web() {
                     <Route path='/master/mapel' element={<ProtectedRoute><Mapel /></ProtectedRoute>} />
                     <Route path='/master/mapel/*' element={<ProtectedRoute><MapelAdd /></ProtectedRoute>} />
                     <Route path='/master/laporan' element={<ProtectedRoute><Laporan /></ProtectedRoute>} />
-  
-                 </Route>
+
+                </Route>
 
                 <Route>
                     <Route path='login' element={<Login setUser={setUser}></Login>} />
+                </Route>
+
+                <Route>
+                    <Route path='/master/laporan/print/*' element={<PrintLaporan />} />
+
                 </Route>
                 <Route>
                     <Route path='*' element={<Error />} />

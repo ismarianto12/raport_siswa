@@ -2,8 +2,6 @@ import Karyawantable from "../../components/karyawan";
 import { useEffect, useState } from 'react'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
-
-
 import TextField from '@mui/material/TextField'
 
 import Fab from '@mui/material/Fab';
@@ -15,97 +13,71 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useSelector, useDispatch } from 'react-redux'
-import {
-    createsiswa, Updatedata
-} from '../../actions/Siswa'
-import * as Icon from 'react-feather'
-import axios from 'axios'
 
 
-export default function SiswaForm() {
+export default function KelasForm() {
 
     const [reqdata, setReqdata] = useState([]);
-    const [siswadata, setSiswadata] = useState({});
+    const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
-    const [path, setPath] = useState('');
-    const dispatch = useDispatch()
-    const [kelamin, setKelamin] = useState();
 
     let params = useParams()
     let navigate = useNavigate()
+
+
     useEffect(() => {
         const pathnya = params['*'].split('/')
-        setPath(pathnya)
-        if (pathnya[0] === 'edit') {
+        console.log(pathnya[0])
+        if (pathnya == 'edit') {
             setActon('Edit')
-            const IdgetParam = pathnya[1] ?? 0
-            const getdetaildata = async (IdgetParam) => {
-                const options = {
-                    method: 'GET',
-                    url: `${process.env.REACT_APP_API_URL}/v1/siswa/show/${IdgetParam}`,
-                    headers: {
-                        'Content-type': 'Application/json',
-                    }
-                }
-                await axios(options)
-                    .then(response => {
-                        const datanya = response.data
-                        return setReqdata(datanya)
-
-                    }).catch(function (error) {
-                        return setReqdata([])
-                    })
-            }
-
-            getdetaildata(IdgetParam)
         } else {
-            setActon('Tambah')
+            setActon('Tambah Data')
         }
-        setSiswadata({
-            nama: reqdata[0] ? reqdata[0].nama : '',
-            nisn: reqdata[0] ? reqdata[0].nisn : '',
-            jk: reqdata[0] ? reqdata[0].jk : '',
-            alamat: reqdata[0] ? reqdata[0].alamat : '',
-            ttl: reqdata[0] ? reqdata[0].ttl : '',
-            kelas: reqdata[0] ? reqdata[0].kelas : '',
-            tahun_masuk: reqdata[0] ? reqdata[0].tahun_masuk : '',
-            nama_ibu: reqdata[0] ? reqdata[0].nama_ibu : '',
-            nama_ayah: reqdata[0] ? reqdata[0].nama_ayah : ''
-        })
-    }, [])
+
+        const karyawan = {
+            nama: reqdata.nama,
+            jk: reqdata.jk,
+            alamat: reqdata.alamat,
+            level: reqdata.level,
+            status_pegawai: reqdata.status_pegawai
+        }
+        setkaryawandata(karyawan)
+        console.log(karyawandata, 'data karyawan')
+    }, []);
+
     const back = () => {
-        navigate('/master/siswa')
+        navigate('/app/karyawan')
     }
-    const options = ['Pria', 'Wanita']
-    console.log(siswadata, 'datanya mas')
+
+    const options = ['Pria', 'Wanita'];
     return (
         <>
             <Formik
-                initialValues={siswadata}
-                enableReinitialize={true}
+                initialValues={
+                    {
+                        nama: '',
+                        jk: '',
+                        alamat: '',
+                        level: '',
+                        status_pegawai: ''
+                    }
+                }
                 validate={(values) => {
                     const errors = {};
                     return errors;
                 }}
-                onSubmit={(values, { setFieldValue }) => {
-                    setFieldValue('jk', kelamin)
-                    if (action === 'Tambah') {
-                        dispatch(createsiswa(values, navigate))
-                    }
-                    if (action === 'Edit') {
-                        dispatch(Updatedata(values, path[1], navigate))
-                    }
+                onSubmit={(values) => {
+
                 }}
             >
 
-                {({ values, onSubmit, setFieldValue, errors }) => {
+                {({ values, onSubmit, errors }) => {
+
                     return (
                         <>
-
                             <Form>
                                 <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
-                                    <Icon.Users /> {`${action} Siswa / Pelajar`}
+                                    {`${action} Pegawai`}
                                     <hr />
                                     <Grid container spacing={2} columns={18}>
                                         <Grid xs={8}>
@@ -113,8 +85,7 @@ export default function SiswaForm() {
 
                                                 as={TextField}
                                                 type="text"
-                                                // label="nama"
-                                                placeholder="Nama Siswa"
+                                                label="nama"
                                                 margin="normal"
                                                 name="nama"
                                                 required
@@ -124,47 +95,41 @@ export default function SiswaForm() {
                                             />
                                         </Grid>
                                         <Grid xs={8}>
-                                            <div style={{ 'marginTop': '15 px' }}>
-                                                <Field size={'small'}
-                                                    as={Autocomplete}
-                                                    margin="normal"
-                                                    fullWidth
-                                                    name="jk"
-                                                    onChange={(e, value) => {
-                                                        console.log(value)
-                                                        // setFieldValue('jk', )
-                                                        setKelamin(value)
-                                                    }}
-                                                    id="controllable-states-demo"
-                                                    options={options}
-                                                    renderInput={(params) => <TextField {...params} value={kelamin} label="Jenis Kelamin" />}
-                                                />
-                                            </div>
+                                            <Field size={'small'}
+                                                as={Autocomplete}
+                                                margin="normal"
+                                                fullWidth
+                                                name="jk"
+                                                value={null}
+                                                id="controllable-states-demo"
+                                                options={options}
+                                                renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
+                                            />
                                         </Grid>
 
                                         <Grid xs={8}>
                                             <Field size={'small'}
                                                 as={TextField}
                                                 type="text"
-                                                placeholder="Nisn Siswa"
+                                                label="nama"
                                                 margin="normal"
-                                                name="nisn"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                autoFocus
-                                            />
-
-                                        </Grid>
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                placeholder='Alamat tempat tinggal'
                                                 name="alamat"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                autoFocus
+                                            />
+
+                                        </Grid>
+                                        <Grid xs={8}>
+                                            <Field size={'small'}
+                                                as={TextField}
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="email"
+                                                label='Status Kepegawaian'
+                                                name="status_pegawai"
                                                 autoComplete="email"
                                                 autoFocus
 
@@ -179,8 +144,8 @@ export default function SiswaForm() {
                                                 required
                                                 fullWidth
                                                 id="email"
-                                                placeholder="Tempat tanggal lahir"
-                                                name="ttl"
+                                                label="NIK"
+                                                name="nik"
                                                 autoComplete="email"
                                                 autoFocus
 
@@ -195,11 +160,13 @@ export default function SiswaForm() {
                                                 required
                                                 fullWidth
                                                 id="email"
-                                                placeholder="Kelas"
-                                                name="kelas"
+                                                label="NIP"
+                                                name="nip"
                                                 autoComplete="email"
                                                 autoFocus
+
                                             />
+
                                         </Grid>
 
                                         <Grid xs={8}>
@@ -209,8 +176,8 @@ export default function SiswaForm() {
                                                 required
                                                 fullWidth
                                                 id="email"
-                                                placeholder="Tahun Masuk"
-                                                name="tahun_masuk"
+                                                label="Email Address"
+                                                name="email"
                                                 autoComplete="email"
                                                 autoFocus
 
@@ -224,28 +191,14 @@ export default function SiswaForm() {
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="text"
-                                                placeholder="Nama Ibu"
-                                                name="nama_ibu"
+                                                id="email"
+                                                label="No Hanphone  "
+                                                name="hp"
                                                 autoComplete="email"
                                                 autoFocus
 
                                             />
 
-                                        </Grid>
-
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="text"
-                                                label="Nama Ayah"
-                                                name="nama_ayah"
-                                                autoComplete="email"
-                                                autoFocus
-                                            />
 
                                         </Grid>
 
@@ -276,8 +229,6 @@ export default function SiswaForm() {
                                     </Container>
                                 </div>
                             </Form>
-
-
                         </>
                     )
                 }}

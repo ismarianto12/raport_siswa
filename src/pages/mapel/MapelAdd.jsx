@@ -17,6 +17,12 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    createmapel, updatemapel
+} from '../../actions/Mapel'
+import Masterdata from "../../components/Masterdata";
+
 
 export default function MapelAdd() {
 
@@ -26,6 +32,7 @@ export default function MapelAdd() {
 
     let params = useParams()
     let navigate = useNavigate()
+    const dispatch = useDispatch()
 
 
     useEffect(() => {
@@ -81,6 +88,7 @@ export default function MapelAdd() {
                         progress: undefined,
                         theme: "light",
                     });
+                    dispatch(createmapel(values))
                     navigate('/master/mapel')
 
                 }}
@@ -139,38 +147,32 @@ export default function MapelAdd() {
 
                                         </Grid>
                                         <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={Autocomplete}
-                                                margin="normal"
-                                                fullWidth
-                                                name="id_pegawai"
-                                                value={null}
-                                                id="controllable-states-demo"
-                                                options={options}
-                                                renderInput={(params) => <TextField {...params} label="Guru Pengampu" />}
-                                            />
+                                            <Masterdata
+                                                name={`pengampu`}
+                                                placeholder={'Pilih guru pengampu'}
+                                                id={`id_pengampu`}
+                                                multiple={true}
+                                                fieldname={'pegawai'} />
                                         </Grid>
 
                                         <hr />
-                                        <br /><br />
-                                        <br /><br />                                        <br /><br />
+                                        <br /><br />                                        <br /><br />                                        <br /><br />
 
                                         <Container component="main" maxWidth="xs">
 
                                             <Button
                                                 type="submit"
-                                                // fullWidth
                                                 color="primary"
                                                 onSubmit={onSubmit}
                                                 variant="contained"
                                             // sx={{ mt: 5, mb: 2 }}
                                             >
-                                                Simpan data
+                                                Save
             </Button>
 &nbsp;
                                         <Button
                                                 type="submit"
-                                                // fullWidth
+                                                fullWidth
                                                 onClick={back}
                                                 color="secondary"
                                                 variant="contained"

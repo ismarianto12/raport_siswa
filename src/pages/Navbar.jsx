@@ -29,7 +29,7 @@ function Navbar() {
             }
         }
         session()
-    }, [level])
+    }, [level, params])
     const handleClick = (e, item) => {
         e.preventDefault();
         setState((state) => ({
@@ -49,27 +49,27 @@ function Navbar() {
             {
                 datanya.map((a, b) => {
                     if (a.subNav != null) {
+                        console.log(a.path,'test donk')
                         return (<li className="nav-item" onClick={e => handleClick(e, a.title)} key={b}>
-                            <NavLink className={state[a.title] || a.path == params.pathname ? "nav-link collapsed active" : "nav-link"} data-toggle="collapse" href="#ui-basic" aria-expanded={state[a.title] || a.path == params.pathname ? true : false} aria-controls="ui-basic">
+                            <NavLink className={state[a.title] || a.path === params.pathname ? "nav-link collapsed active" : "nav-link"} data-toggle="collapse" href="#ui-basic" aria-expanded={state[a.title] || a.path == params.pathname ? true : false} aria-controls="ui-basic">
                                 {a.icon} &nbsp;&nbsp;
                                 <span className="menu-title">{a.title}</span>
                                 <i className='menu-arrow'>
                                     {state[a.title]}
                                 </i>
                             </NavLink>
-                            <div className={state[a.title] || a.path == params.pathname ? "collapse show" : 'collapse'} id="ui-basic" style={{}}>
-                                <ul className={state[a.title] || a.path == params.pathname ? "nav flex-column sub-menu show" : "nav flex-column sub-menu"}>
+                            <div className={state[a.title] || a.path === params.pathname ? "collapse show" : 'collapse'} id="ui-basic" style={{}}>
+                                <ul className={state[a.title] || a.path === params.pathname ? "nav flex-column sub-menu show" : "nav flex-column sub-menu"}>
                                     {a.subNav.map((gg, listdata) => {
-                                        console.log([a.path, params.pathname], 'parent')
-
-                                        return (<li className="nav-item"> <NavLink className="nav-link" to={gg.path}>{gg.title}</NavLink></li>)
+ 
+                                        return (<li className="nav-item"> <NavLink className="nav-link" to={gg.path} exact key={listdata}>{gg.title}</NavLink></li>)
                                     })
                                     }
                                 </ul>
                             </div>
                         </li>)
                     } else {
-                        return (<li className={(a.title || a.path == params.pathname ? 'nav-item active' : 'nav-item')}>
+                        return (<li className={(a.title || a.path === params.pathname ? 'nav-item active' : 'nav-item')}>
                             <NavLink className="nav-link" to={a.path}>
                                 {a.icon} &nbsp;&nbsp;
                                 <span className="menu-title">{a.title}</span>

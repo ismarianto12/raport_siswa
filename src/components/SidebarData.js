@@ -31,7 +31,7 @@ export const SidebarData = [
             },
             {
                 title: 'Tenaga Kependidikan',
-                path: '/app/level',
+                path: '/app/karyawan',
                 icon: <IoIcons.IoIosPaper />
             }
             // {
@@ -166,7 +166,7 @@ export const Guru = [
             },
             {
                 title: 'Tenaga Kependidikan',
-                path: '/app/level',
+                path: '/app/karyawan',
                 icon: <IoIcons.IoIosPaper />
             }
             // {

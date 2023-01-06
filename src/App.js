@@ -5,6 +5,7 @@ import TopLoader from "react-top-loader";
 import Animator from './components/Animator';
 import { Helmet } from 'react-helmet';
 import AplikasiContext from './context/AplikasiContext';
+import { hot } from "react-hot-loader";
 
 function App() {
     const [token, setToken] = useState(null)
@@ -26,4 +27,4 @@ function App() {
 
     </>)
 }
-export default App;
+export default hot(module)(App);

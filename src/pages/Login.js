@@ -1,50 +1,33 @@
 
 
+import { responsiveFontSizes } from '@mui/material';
 import { useState, useContext } from 'react'
 import * as Icon from 'react-feather';
 import { Helmet } from 'react-helmet';
 import { Navigate, useNavigate, NavLink, redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import AplikasiContext from '../context/AplikasiContext';
+import {
+    loginAcc
+} from '../actions/Login'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { RiContactsBookUploadFill } from 'react-icons/ri';
 
 export default function Login() {
     const { token, setToken } = useContext(AplikasiContext)
+    const { loading, error, data } = useSelector(state => state.login)
+    const dispacth = useDispatch()
+
     const navigate = useNavigate()
+
     const [value, Setvalue] = useState({
         username: '',
         password: ''
     })
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(value)
-        if (value.username === 'admin') {
-            let session = {
-                "level": 'admin',
-                "username": value.username
-            }
-            localStorage.setItem('token', JSON.stringify(session))
-            setToken(JSON.parse(JSON.stringify(session)))
-            navigate("/")
-        } else if (value.username === 'siswa') {
-            let session = {
-                "level": 'siswa',
-                "username": value.username
-            }
-            localStorage.setItem('token', JSON.stringify(session))
-            setToken(JSON.parse(JSON.stringify(session)))
-            navigate("/")
-        } else if (value.username === 'guru') {
-            let session = {
-                "level": 'guru',
-                "username": value.username
-            }
-            localStorage.setItem('token', JSON.stringify(session))
-            setToken(JSON.parse(JSON.stringify(session)))
-            navigate("/")
-        }
-        else {
-            Swal.fire('error', 'Username dan password salah', 'error')
-        }
+        dispacth(loginAcc(value, navigate))
     }
     const divStyle = {
         height: '100vh',
@@ -93,11 +76,11 @@ export default function Login() {
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-floating mb-3">
                                             <input type="text" className="form-control" id="username" onChange={onChange} value={value.username} placeholder="" />
-                                            <label htmlFor="floatingInput">Username</label>
+                                            {/* <label htmlFor="floatingInput">Username</label> */}
                                         </div>
                                         <div className="form-floating mb-3">
                                             <input type="password" className="form-control" id="password" onChange={onChange} value={value.password} placeholder="Password" />
-                                            <label htmlFor="floatingPassword">Password</label>
+                                            {/* <label htmlFor="floatingPassword">Password</label> */}
                                         </div>
                                         <div className="form-check mb-3">
                                             <input className="form-check-input" type="checkbox" defaultValue id="rememberPasswordCheck" />
