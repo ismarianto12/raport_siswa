@@ -6,10 +6,11 @@ import Swal from 'sweetalert2';
 
 import { useSelector, useDispatch } from 'react-redux'
 import {
-    createsiswa, deletesiswa, updatesiswa
-} from '../../actions/Siswa'
+    createsiswa, karyawandelete, updatesiswa
+} from '../../actions/Karyawan'
+
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Route } from 'react-router-dom'
 import Action from "../../components/Action";
 
 class Karyawan extends React.Component {
@@ -21,13 +22,13 @@ class Karyawan extends React.Component {
     componentDidMount() {
         this.fetdata()
     }
-    componentDidUpdate() {
+    componentWillUnmount() {
         this.fetdata()
     }
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get('${process.env.REACT_APP_API_URL}/v1/pegawai')
+        axios.get(`${process.env.REACT_APP_API_URL}/v1/pegawai`)
             .then(response => {
                 this.setState({ data: response.data });
             })
@@ -48,13 +49,34 @@ class Karyawan extends React.Component {
             confirmButtonText: 'Iya'
         }).then((result) => {
             if (result.isConfirmed) {
-                this.props.deletesiswa(e)
+                this.karyawandelete(e)
                 this.fetdata()
             }
         })
     }
+    async karyawandelete(id) {
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/v1/pegawai/delete/${id}`,
+            data: {
+                id: id
+            },
+            method: 'post',
+            headers: {
+                'Content-type': 'Application/json',
+            }
+
+        }
+        await axios(config).then(r => {
+            this.fetdata()
+        }).catch(function (error) {
+            console.log(error)
+        })
+    }
+
+
+
     render() {
-        
+
 
         this.array = this.state.data.map(result => [result.nama, result.jk, result.nip, result.status_pegawai, result.tahun_masuk, result.id]);
         const columns = [
@@ -70,7 +92,7 @@ class Karyawan extends React.Component {
                                 }} >
                                     Delete
                             </button>
-                                <Action url={`/master/karyawan/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
+                                <Action url={`/app/karyawan/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
                             </>
                         );
                     }
@@ -112,10 +134,9 @@ class Karyawan extends React.Component {
         );
     }
 }
-const mapDispatchToProps = dispatch => ({
-    deletesiswa: e => {
-        dispatch(deletesiswa(e));
-    }
-});
-
-export default connect(null, mapDispatchToProps)(Karyawan)
+// const mapDispatchToProps = dispatch => ({
+//     karyawandelete: e => {
+//         dispatch(karyawandelete(e));
+//     }
+// });
+export default Karyawan

@@ -28,7 +28,7 @@ class TableRaport extends React.Component {
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get('${process.env.REACT_APP_API_URL}/v1/siswa')
+        axios.get(`${process.env.REACT_APP_API_URL}/v1/siswa`)
             .then(response => {
                 this.setState({ data: response.data });
             })

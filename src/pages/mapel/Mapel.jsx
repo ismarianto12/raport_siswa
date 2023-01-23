@@ -28,7 +28,7 @@ class Mapel extends React.Component {
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get('${process.env.REACT_APP_API_URL}/v1/mapel')
+        axios.get(`${process.env.REACT_APP_API_URL}/v1/mapel`)
             .then(response => {
                 this.setState({ data: response.data });
             })
@@ -36,7 +36,6 @@ class Mapel extends React.Component {
                 console.log(error);
             });
     }
-
 
     delete = async (e) => {
         return Swal.fire({
@@ -56,23 +55,39 @@ class Mapel extends React.Component {
     }
     render() {
 
-        this.array = this.state.data.map(result => [result.kode, result.mapel, result.kkm, result.kurikulum, result.id]);
+        // const levelakses = localStorage.getItem('token')  
+        const local = localStorage.getItem('token')
+        const localstorage = JSON.parse(local)
+        console.log(localstorage, 'detail local')
+        const level = localstorage.level
+
+        this.array = this.state.data.map(result => [result.kode, result.mapel, result.kkm, result.nama ?? 'Kosong', result.id_mapel]);
         const columns = [
-            { name: 'Kode' }, { name: 'mapel' }, { name: 'KKM' }, { name: 'Kurikulum' }, {
+            { name: 'Kode' }, { name: 'mapel' }, { name: 'KKM' }, { name: 'Pengampu' }, {
                 name: "Action",
                 options: {
                     filter: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return (
-                            <>
-                                <button className="btn btn-danger btn-sm" onClick={() => {
-                                    this.delete(tableMeta.rowData[4])
-                                }} >
-                                    Delete
+
+                            level !== 'guru' ?
+                                <>
+                                    <button className="btn btn-danger btn-sm" onClick={() => {
+                                        this.delete(tableMeta.rowData[4])
+                                    }} >
+                                        Delete
                             </button>
-                                <Action url={`/master/mapel/edit/${tableMeta.rowData[4]}`} title="Edit" classname="btn btn-warning btn-sm" />
-                            </>
-                        );
+                                    <Action url={`/master/mapel/edit/${tableMeta.rowData[4]}`} title="Edit" classname="btn btn-warning btn-sm" />
+                                </>
+                                : <>
+
+                                    <button className="btn btn-danger btn-sm" onClick={() => {
+                                        this.delete(tableMeta.rowData[4])
+                                    }} >
+                                        View
+                            </button>
+                                </>
+                        )
                     }
 
                 }
@@ -103,12 +118,18 @@ class Mapel extends React.Component {
                             <br />
                             <b>Data Mata pelajaran</b>
                             <br />
-                            <NavLink
-                                to='/master/mapel/add'
-                                className={'btn btn-primary'}
-                            >
-                                Tambah data
-        </NavLink>
+                            {level !== 'guru' ?
+
+                                <>
+                                    <NavLink
+                                        to='/master/mapel/add'
+                                        className={'btn btn-primary'}
+                                    >
+                                        Tambah data
+                      </NavLink>
+                                </>
+
+                                : ''}
                         </>
                     }
                     data={datanya}

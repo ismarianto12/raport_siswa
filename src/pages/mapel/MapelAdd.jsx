@@ -56,9 +56,8 @@ export default function MapelAdd() {
     }, []);
 
     const back = () => {
-        navigate('/app/karyawan')
+        navigate('/master/mapel')
     }
-
     const options = ['Pria', 'Wanita'];
     return (
         <>
@@ -165,14 +164,16 @@ export default function MapelAdd() {
                                                 color="primary"
                                                 onSubmit={onSubmit}
                                                 variant="contained"
-                                            // sx={{ mt: 5, mb: 2 }}
+                                                sx={{ mt: 5, mb: 2 }}
                                             >
                                                 Save
             </Button>
 &nbsp;
                                         <Button
                                                 type="submit"
-                                                fullWidth
+                                                // fullWidth
+                                                sx={{ mt: 5, mb: 2 }}
+
                                                 onClick={back}
                                                 color="secondary"
                                                 variant="contained"

@@ -479,7 +479,6 @@ const Error = () => {
     const [state] = React.useState(schema);
 
     return (<>
-
         <Helmet>
             <meta charSet="utf-8" />
             <title>Dashboard</title>
@@ -487,39 +486,21 @@ const Error = () => {
         </Helmet>
 
         <div className="row">
-            <div className="col-md-6 grid-margin transparent">
-                <div className="row">
-
-                    <div className="col-md-6 mb-4 stretch-card transparent">
-                        <img src="/logo.png" className={'img-responsive'} style={{ 'width': '100px' }} />
-                    </div>
-                    <div className="col-md-6 mb-4 stretch-card transparent">
-                        <h4>Dashboard Apps </h4>
-                        <br />
-                        <p>Sistem Rapor siswa</p>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                        <div className="card card-light-blue">
-                            <div className="card-body">
-                                <p className="mb-4">Status Penilaian</p>
-                                <p className="fs-30 mb-2">34040</p>
-                                <p>2.00% (30 days)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 stretch-card transparent">
-                        <div className="card card-light-danger">
-                            <div className="card-body">
-                                <p className="mb-4">Data Pegawai</p>
-                                <p className="fs-30 mb-2">47033</p>
-                                <p>0.22% (30 days)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="col-md-2 stretch-card transparent">
+                <img src="/logo.png" className={'img-responsive'} style={{ 'width': '100px' }} />
             </div>
+            <div className="col-md-6 mb-4 stretch-card transparent">
+                <p> <h4>Dashboard Apps </h4>
+                    <br />
+                Sistem Rapor siswa</p>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+
+        <div className="row">
+
 
             <div className="col-md-6 grid-margin stretch-card">
                 <div className="card tale-bg">

@@ -16,6 +16,7 @@ import Masterdata from '../components/Masterdata'
 import { Form, Formik, Field } from 'formik'
 import SearchRaport from "./SearchRaport"
 import * as  Icon from 'react-feather'
+import Carilaporan from "./Carilaporan";
 
 
 class Tablelaporan extends React.Component {
@@ -26,26 +27,74 @@ class Tablelaporan extends React.Component {
 
         this.state = {
             data: [],
-            array: []
+            array: [],
+            level: ''
         }
     }
     componentDidMount() {
+
+        const local = localStorage.getItem('token')
+        const localstorage = JSON.parse(local)
+        console.log(localstorage.level)
+        const level = localstorage.level
         this.fetdata()
+
+        this.setState({
+            level: level
+        })
     }
-    componentDidUpdate() {
-        this.fetdata()
-    }
+
+
 
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get(`${process.env.REACT_APP_API_URL}/v1/mapel`)
-            .then(response => {
-                this.setState({ data: response.data });
-            })
-            .catch(error => {
-                console.log(error);
-            });
+
+        const local = localStorage.getItem('token')
+        const localstorage = JSON.parse(local)
+
+        console.log(localstorage, 'detail local')
+
+        const level = localstorage.level
+
+
+        console.log(level, 'detail data siswa')
+        if (level === 'siswa') {
+            const id = localstorage.id
+            axios.get(`${process.env.REACT_APP_API_URL}/v1/raport?session_id=${id}`)
+                .then(response => {
+                    this.setState({ data: response?.data })
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
+        } else {
+            axios.get(`${process.env.REACT_APP_API_URL}/v1/raport`)
+                .then(response => {
+                    this.setState({ data: response?.data })
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }
+
+    konfirmasi() {
+        return Swal.fire({
+            title: 'Kamu yakin ?',
+            text: "Status penilaian akan di assingment ke wali kelas  ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.fetdata()
+            }
+        })
+
     }
 
 
@@ -67,7 +116,7 @@ class Tablelaporan extends React.Component {
     }
     render() {
 
-        this.array = this.state.data.map(result => [result.kode, result.mapel, result.kkm, result.kurikulum, result.kurikulum, result.id]);
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk, result.id]);
         const columns = [
             { name: 'Nama' }, { name: 'NISN' }, { name: 'JK' }, { name: 'Rerata' }, { name: 'Semester' }, {
                 name: "Action",
@@ -77,9 +126,12 @@ class Tablelaporan extends React.Component {
                         return (
                             <>
                                 <Action blank={true} url={`/master/laporan/print/${tableMeta.rowData[5]}`} title={`Print data`} classname="btn btn-warning btn-sm" />
-                                <Action url={`/master/laporan/requestnilai/${tableMeta.rowData[5]}`} title={`Ubah Penilaian`} classname="btn btn-info btn-sm" />
+                                <br />
+                                {/* <Action url={`#`} onclick={this.konfirmasi} title={`Ubah Penilaian`} classname="btn btn-info btn-sm" /> */}
+                                <button className="btn btn-info btn-sm" onClick={this.konfirmasi}> Ubah Penilaian </button>
+
                             </>
-                        );
+                        )
                     }
 
                 }
@@ -103,12 +155,9 @@ class Tablelaporan extends React.Component {
                     title={
                         <>
 
+                            <Carilaporan semester={this.semester} tahun_akademik={this.tahun_akademik} />
                             <p><Icon.List />{`Silahkan pilih data penilaian seusuai semester`}</p>
-                            {/* <SearchRaport
-                                semester={this.semester}
-                                kelas={this.kelas}
 
-                            /> */}
                         </>
                     }
                     data={datanya}

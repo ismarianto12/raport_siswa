@@ -47,11 +47,13 @@ export const loginAcc = (data, navigate) => async dispatch => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/v1/login`, data)
         const resdata = response.data
         let session = {
+            "id": resdata.id,
             "level": resdata.level,
             "username": resdata.username
         }
         localStorage.setItem('token', JSON.stringify(session))
         dispatch(loginSuccess(response.data))
+        console.log(session)
         navigate('/')
 
     } catch (error) {

@@ -104,9 +104,9 @@ export default function RaportForm() {
                     await axios(options)
                         .then(response => {
                             Swal.fire('Success', `Siswa ${response.data.nama} di simpan`, 'success')
-                            navigate('persentase/penilaian')
+                            navigate('/app/raport')
                         }).catch(function (error) {
-                            // console.log(error, 'errorc')
+                            console.log(error, 'errorc')
                         })
 
 
@@ -209,7 +209,7 @@ export default function RaportForm() {
                                         <Grid xs={8}>
 
                                             <p>Catatan Penilaian yang di perlukan </p>
-                                            
+
 
                                             <Field size={'small'}
                                                 onChange={(e) => setFieldValue('catatan_penilaian', e.target.value)
@@ -229,6 +229,9 @@ export default function RaportForm() {
                                         </Grid>
                                     </Grid>
                                     <hr />
+
+                                    <br />
+                                    
                                     <Container component="main" maxWidth="xs">
 
                                         <Button

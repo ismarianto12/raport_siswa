@@ -17,15 +17,18 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
 import Masterdata from '../../components/Masterdata'
 import axios from 'axios'
+import Swal from "sweetalert2";
 
-
-export default function KaryawanForm() {
+export default function UserAdd() {
 
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
     const [jk, setJk] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('')
+    const [level, setLevel] = useState('')
+    const [akseslevel, setAkseslevel] = useState('');
+
     let params = useParams()
     let navigate = useNavigate()
     useEffect(() => {
@@ -46,14 +49,24 @@ export default function KaryawanForm() {
         }
         setkaryawandata(karyawan)
         console.log(karyawandata, 'data karyawan')
-    }, []);
+
+    }, [])
+
 
     const back = () => {
-        navigate('/app/karyawan')
+        navigate('/app/user')
     }
 
     const options = ['Pria', 'Wanita'];
     const status_peg = ['PNS', 'HONORER'];
+
+    const level_aksesdata = [
+        { 'id': 'admin', 'label': 'Administrator' },
+        { 'id': 'tata_usaha', 'label': 'Tata Usaha' },
+        { 'id': 'guru', 'label': 'Guru' },
+        { 'id': 'walikelas', 'label': 'Wali Kelas' },
+        { 'id': 'siswa', 'label': 'Siswa' },
+    ]
 
     return (
         <>
@@ -72,12 +85,12 @@ export default function KaryawanForm() {
                     return errors;
                 }}
                 onSubmit={(values, { setFieldValue }) => {
-                    setFieldValue('jk', jk)
+                    setFieldValue('level_akses', level)
 
                     const options = {
                         method: 'POST',
                         data: JSON.parse(JSON.stringify(values)),
-                        url: `${process.env.REACT_APP_API_URL}/v1/pegawai/insert`,
+                        url: `${process.env.REACT_APP_API_URL}/v1/login/insert`,
                         headers: {
                             'Content-type': 'Application/json',
                         }
@@ -85,73 +98,96 @@ export default function KaryawanForm() {
                     axios(options)
                         .then(response => {
                             // navigate('/master/pegawai')
-                            navigate('/app/karyawan')
+                            navigate('/app/user')
 
                         }).catch(function (error) {
                             console.log(error)
                         })
-
-
                 }}
             >
 
-                {({ values, onSubmit, errors, setFieldValue }) => {
+                {({ values, onSubmit, errors, setFieldValue, getFieldValue }) => {
+                    console.log(akseslevel, 'akses master')
 
                     return (
                         <>
                             <Form>
                                 <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
-                                    {`${action} Pegawai`}
+                                    {`${action} User`}
                                     <hr />
                                     <Grid container spacing={2} columns={18}>
                                         <Grid xs={8}>
                                             <Field size={'small'}
-
                                                 as={TextField}
                                                 type="text"
-                                                label="Nama Guru"
+                                                label="Username"
                                                 margin="normal"
-                                                name="nama"
+                                                name="username"
                                                 required
                                                 fullWidth
                                                 id="email"
                                                 autoFocus
-                                            />
-                                        </Grid>
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={Autocomplete}
-                                                margin="normal"
-                                                fullWidth
-                                                name="jk"
-                                                onChange={(e, val) => {
-                                                    setJk(val)
+                                                inputProps={
+                                                    { readOnly: true, }
                                                 }
-                                                }
-                                                value={jk}
-                                                id="controllable-states-demo"
-                                                options={options}
-                                                renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
                                             />
                                         </Grid>
 
-
                                         <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={Autocomplete}
-                                                margin="normal"
-                                                fullWidth
-                                                name="status_peg"
-                                                onChange={(e, val) => {
-                                                    setStatus(val)
-                                                }
-                                                }
-                                                value={status}
-                                                id="controllable-states-demo"
-                                                options={options}
-                                                renderInput={(params) => <TextField {...params} label="Status Kepegawaian" />}
-                                            />
+                                            <div style={{ 'marginTop': '16px' }}>
+                                                <Field size={'small'}
+                                                    as={Autocomplete}
+                                                    margin="normal"
+                                                    fullWidth
+                                                    name="level_akses"
+                                                    onChange={(e, value) => {
+                                                        setLevel(value.id)
+                                                        if (level === 'admin') {
+                                                            setAkseslevel('pegawai')
+                                                        }
+                                                        if (level === 'tata_usaha') {
+                                                            setAkseslevel('pegawai')
+                                                        }
+                                                        if (level === 'guru') {
+                                                            setAkseslevel('pegawai')
+                                                        }
+                                                        if (level === 'siswa') {
+                                                            setAkseslevel('siswa')
+                                                        }
+                                                        Swal.fire('info', level, 'info')
+
+                                                    }}
+                                                    id="controllable-states-demo"
+                                                    options={level_aksesdata}
+                                                    renderInput={(params) => <TextField {...params} value={level} label="Level akses" />}
+                                                />
+                                            </div>
                                         </Grid>
+
+
+                                        {console.log(akseslevel.length > 0, 'console detail')}
+
+                                        {
+                                            akseslevel.length > 0 ?
+
+                                                <Grid xs={8}>
+                                                    <div style={{ 'marginTop': '15px' }}>
+                                                        <Masterdata
+                                                            name={`${akseslevel}`}
+                                                            placeholder={`${akseslevel} Pilih`}
+                                                            id={`${akseslevel}`}
+                                                            setFieldValue={setFieldValue}
+                                                            fieldname={`${akseslevel}`}
+                                                            multiple={false}
+                                                            onChange={(e) =>
+                                                                console.log(e,'detail value get here')
+                                                                // Swal.fire('info', e, 'info')
+                                                            }
+                                                        />
+                                                    </div>
+                                                </Grid>
+                                                : ''
+                                        }
 
 
                                         <Grid xs={8}>
@@ -160,11 +196,12 @@ export default function KaryawanForm() {
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="email"
-                                                label="NIK"
+                                                id="password"
+                                                label="Password"
                                                 name="nik"
                                                 autoComplete="email"
                                                 autoFocus
+                                                type="password"
 
                                             />
 
@@ -176,11 +213,12 @@ export default function KaryawanForm() {
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="email"
-                                                label="NIP"
-                                                name="nip"
+                                                id="password"
+                                                label="Ulangi Password"
+                                                name="nik"
                                                 autoComplete="email"
                                                 autoFocus
+                                                type="password"
 
                                             />
 
@@ -199,23 +237,6 @@ export default function KaryawanForm() {
                                                 autoFocus
 
                                             />
-
-
-                                        </Grid>
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="No Hanphone  "
-                                                name="hp"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
-
 
                                         </Grid>
 

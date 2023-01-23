@@ -20,6 +20,11 @@ export const SidebarData = [
                 icon: <IoIcons.IoIosPaper />
             },
             {
+                title: 'Kelas',
+                path: '/app/kelas',
+                icon: <IoIcons.IoLogoReddit />
+            },
+            {
                 title: 'Mata Pelajaran',
                 path: '/master/mapel',
                 icon: <IoIcons.IoIosPaper />
@@ -105,15 +110,10 @@ export const Murid = [
     {
         title: 'Penilaian Siswa',
         path: '/overview',
-        icon: <AiIcons.AiFillHome />,
+        icon: <Icon.List />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
-            {
-                title: 'Raport Hasil Semester',
-                path: '/app/raport',
-                icon: <IoIcons.IoIosPaper />
-            },
             {
                 title: 'Persentanse',
                 path: '/app/persentase/penilaian',
@@ -145,7 +145,7 @@ export const Guru = [
     {
         title: 'Master Data',
         path: '/overview',
-        icon: <AiIcons.AiFillHome />,
+        icon: <Icon.List />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
@@ -159,16 +159,16 @@ export const Guru = [
                 path: '/master/mapel',
                 icon: <IoIcons.IoIosPaper />
             },
-            {
-                title: 'Tenaga Pendidik',
-                path: '/app/karyawan',
-                icon: <IoIcons.IoIosPaper />
-            },
-            {
-                title: 'Tenaga Kependidikan',
-                path: '/app/karyawan',
-                icon: <IoIcons.IoIosPaper />
-            }
+            // {
+            //     title: 'Tenaga Pendidik',
+            //     path: '/app/karyawan',
+            //     icon: <IoIcons.IoIosPaper />
+            // },
+            // {
+            //     title: 'Tenaga Kependidikan',
+            //     path: '/app/karyawan',
+            //     icon: <IoIcons.IoIosPaper />
+            // }
             // {
             //     title: 'Kurikulum',
             //     path: '/app/kurikulum',
@@ -179,7 +179,7 @@ export const Guru = [
     {
         title: 'Penilaian',
         path: '/overview',
-        icon: <AiIcons.AiFillHome />,
+        icon: <Icon.UserX />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
@@ -198,7 +198,7 @@ export const Guru = [
     {
         title: 'Laporan',
         path: '/reports',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <Icon.DownloadCloud />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
 
@@ -211,26 +211,26 @@ export const Guru = [
             }
         ]
     },
-    {
-        title: 'Aplikasi',
-        path: '/messages',
-        icon: <FaIcons.FaEnvelopeOpenText />,
+    // {
+    //     title: 'Aplikasi',
+    //     path: '/messages',
+    //     icon: <FaIcons.FaEnvelopeOpenText />,
 
-        iconClosed: <RiIcons.RiArrowDownSFill />,
-        iconOpened: <RiIcons.RiArrowUpSFill />,
+    //     iconClosed: <RiIcons.RiArrowDownSFill />,
+    //     iconOpened: <RiIcons.RiArrowUpSFill />,
 
-        subNav: [
-            {
-                title: 'Akses Login',
-                path: '/app/user',
-                icon: <IoIcons.IoIosPaper />
-            },
-            {
-                title: 'Indentitas Aplikasi',
-                path: '/app/identitas',
-                icon: <IoIcons.IoIosPaper />
-            }
-        ]
-    },
+    //     subNav: [
+    //         {
+    //             title: 'Akses Login',
+    //             path: '/app/user',
+    //             icon: <IoIcons.IoIosPaper />
+    //         },
+    //         {
+    //             title: 'Indentitas Aplikasi',
+    //             path: '/app/identitas',
+    //             icon: <IoIcons.IoIosPaper />
+    //         }
+    //     ]
+    // },
 
 ];

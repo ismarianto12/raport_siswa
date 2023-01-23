@@ -3,7 +3,8 @@ import axios from 'axios'
 //  import /
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField'
-import { Form, Formik, Field } from 'formik'
+import { Form, Formik, Field, swap } from 'formik'
+import Swal from 'sweetalert2';
 
 
 class Masterdata extends React.Component {
@@ -54,9 +55,9 @@ class Masterdata extends React.Component {
         }
         await axios(options)
             .then(response => {
-                const datanya = response.data
-                const dataapp = datanya.length > 0 ?
-                    datanya.map((a, j) => {
+                const datanya = response?.data
+                const dataapp = datanya?.length > 0 ?
+                    datanya?.map((a, j) => {
                         if (this.fieldname === 'siswa') {
                             return ({
                                 'value': a.id, 'label': `${a.nama} - ${a.nisn}`
@@ -66,9 +67,23 @@ class Masterdata extends React.Component {
                             return ({
                                 'value': a.id, 'label': `${a.kode} - ${a.mapel}`
                             })
-                        } else if (this.fieldname === 'kelas') {
+                        } else if (this.fieldname === 'siswa') {
+                            return ({
+                                'value': a.id, 'label': `${a.nama} - ${a.nisn}`
+                            })
+                        }
+                        else if (this.fieldname === 'kelas') {
                             return ({
                                 'value': a.id, 'label': `${a.kelas} - ${a.kode}`
+                            })
+                        } else if (this.fieldname === 'pegawai') {
+                            return ({
+                                'value': a?.id, 'label': `${a?.nama} - ${a?.nip}`
+                            })
+
+                        } else if (this.fieldname === 'level_akses') {
+                            return ({
+                                'value': a?.id, 'label': `${a?.label}`
                             })
                         } else {
                             return ({
@@ -81,7 +96,7 @@ class Masterdata extends React.Component {
                     })
 
                 this.setState({
-                    data: dataapp,
+                    data: dataapp ? dataapp : [],
                     loading: false,
                 })
             }).catch(function (error) {
@@ -103,6 +118,7 @@ class Masterdata extends React.Component {
             { label: 'Option 3', value: 'option3' }
         ];
 
+        console.log(this.state.data.length > 0, 'master data')
         return (
             <>
                 <Field size={'small'}
@@ -110,19 +126,18 @@ class Masterdata extends React.Component {
                     margin="normal"
                     fullWidth
                     name={this.props.name}
+
                     onChange={(e, value) => {
-                        // ...
 
-
+                        if (this.state.data.length === 0) {
+                            Swal.fire('info', `data master ${this.fieldname} kosong silahkan tambahkan`, 'info')
+                        }
                         console.log(this.state.datacomp, 'data anda')
                         this.setFieldValue(`${this.name}`, value.value)
-                        // this.setState({
-                        //     datacomp: value
-                        // })
                     }}
                     id="controllable-states-demo"
-                    options={this.state.data}
-                    renderInput={(params) => <TextField {...params} value={this.state.datacomp.value} label={`${this.placeholder}`} />}
+                    options={this.state.data.length > 0 ? this.state.data : []}
+                    renderInput={(params) => <TextField {...params} value={this.state.datacomp?.value} label={`${this.placeholder}`} />}
                 />
             </>
 

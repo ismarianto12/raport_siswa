@@ -15,7 +15,7 @@ const Template = ({ Outlet }) => {
             const local = await localStorage.getItem('token')
             const localstorage = JSON.parse(local)
             console.log(localstorage.level)
-            setlevelakses(localstorage.level.toUpperCase())
+            setlevelakses(`${localstorage.username.toUpperCase()} | ${localstorage.level.toUpperCase()} `)
         }
         getdata()
     }, []);
@@ -180,7 +180,8 @@ const Template = ({ Outlet }) => {
                             </li>
                             <li onClick={() => Setactive(!active)} className={active ? 'nav-item nav-profile dropdown show' : 'nav-item nav-profile dropdown'}>
                                 <a className="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                    <img src="https://bootstrapdash.com/demo/skydash-free/template/images/faces/face28.jpg" alt="profile" />
+                                    {/* <img src="https://bootstrapdash.com/demo/skydash-free/template/images/faces/face28.jpg" alt="profile" /> */}
+                                    <Icon.User />
                                 </a>
                                 <div className={active ? 'dropdown-menu dropdown-menu-right navbar-dropdown show' : 'dropdown-menu dropdown-menu-right navbar-dropdown'} aria-labelledby="profileDropdown">
                                     <NavLink to="/app/profile" className="dropdown-item">

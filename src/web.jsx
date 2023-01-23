@@ -9,6 +9,8 @@ import Login from './pages/Login';
 import MasterData from './pages/MasterData'
 import User from './pages/User'
 import Profile from './pages/user/Profile'
+import UserAdd from './pages/user/UserAdd'
+
 import { Level } from './pages/level/Index';
 import FormLevel from './pages/level/Form';
 import Siswa from './pages/siswa/Siswa';
@@ -48,12 +50,15 @@ export default function Web() {
                     <Route path='/app/kelas' element={<ProtectedRoute><Kelas /></ProtectedRoute>} />
                     <Route path='/app/kelas/*' element={<ProtectedRoute><KelasForm /></ProtectedRoute>} />
 
-                    <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
+                    {/* <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} /> */}
                     <Route path='/app/raport' element={<ProtectedRoute><Raport /></ProtectedRoute>} />
                     <Route path='/app/raport/*' element={<ProtectedRoute><RaportForm /></ProtectedRoute>} />
 
                     <Route path='/app/identitas' element={<ProtectedRoute><Identitas /></ProtectedRoute>} />
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
+                    <Route path='/app/user/*' element={<ProtectedRoute><UserAdd /></ProtectedRoute>} />
+                    
+                    
                     <Route path='/app/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path='/app/level' element={<ProtectedRoute><Level /></ProtectedRoute>} />
                     <Route path='/app/level/create' element={<ProtectedRoute><FormLevel /></ProtectedRoute>} />

@@ -21,6 +21,7 @@ import {
 } from '../../actions/Siswa'
 import * as Icon from 'react-feather'
 import axios from 'axios'
+import Masterdata from "../../components/Masterdata";
 
 
 export default function SiswaForm() {
@@ -189,7 +190,7 @@ export default function SiswaForm() {
                                         </Grid>
 
                                         <Grid xs={8}>
-                                            <Field size={'small'}
+                                            {/* <Field size={'small'}
                                                 as={TextField}
                                                 margin="normal"
                                                 required
@@ -199,6 +200,18 @@ export default function SiswaForm() {
                                                 name="kelas"
                                                 autoComplete="email"
                                                 autoFocus
+                                            /> */}
+
+
+                                            <Masterdata
+
+                                                name={'kelas'}
+                                                placeholder={'Kelas'}
+                                                id={'kelas'}
+                                                // value={}
+                                                setFieldValue={setFieldValue}
+                                                fieldname={'kelas'}
+                                                multiple={false}
                                             />
                                         </Grid>
 

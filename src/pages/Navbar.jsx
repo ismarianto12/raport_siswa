@@ -15,10 +15,10 @@ function Navbar() {
         console.log(params.pathname, 'pathname location')
 
         const session = async () => {
-            const local = await localStorage.getItem('token')
-
+            const local = await localStorage.getItem('token') 
             const localstorage = JSON.parse(local)
             console.log(localstorage.level)
+            
             setLevel(localstorage.level)
             if (level == 'admin') {
                 setDatanya(SidebarData)

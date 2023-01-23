@@ -13,7 +13,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import Masterdata from "../../components/Masterdata";
+import axios from 'axios'
 
 export default function KelasForm() {
 
@@ -46,7 +47,7 @@ export default function KelasForm() {
     }, []);
 
     const back = () => {
-        navigate('/app/karyawan')
+        navigate('/app/kelas')
     }
 
     const options = ['Pria', 'Wanita'];
@@ -55,18 +56,32 @@ export default function KelasForm() {
             <Formik
                 initialValues={
                     {
-                        nama: '',
-                        jk: '',
-                        alamat: '',
-                        level: '',
-                        status_pegawai: ''
+                        kelas: '',
+                        kode: '',
+                        id_pegawai: '',
                     }
                 }
                 validate={(values) => {
                     const errors = {};
                     return errors;
                 }}
-                onSubmit={(values) => {
+                onSubmit={async (values) => {
+                    const options = {
+                        method: 'POST',
+                        data: JSON.parse(JSON.stringify(values)),
+                        url: `${process.env.REACT_APP_API_URL}/v1/kelas/insert`,
+                        headers: {
+                            'Content-type': 'Application/json',
+                        }
+                    }
+                    await axios(options)
+                        .then(response => {
+                            console.log(response)
+                            navigate('/app/kelas')
+
+                        }).catch(function (error) {
+                            console.log(error)
+                        })
 
                 }}
             >
@@ -77,7 +92,7 @@ export default function KelasForm() {
                         <>
                             <Form>
                                 <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
-                                    {`${action} Pegawai`}
+                                    {`${action} Master Kelas`}
                                     <hr />
                                     <Grid container spacing={2} columns={18}>
                                         <Grid xs={8}>
@@ -85,38 +100,27 @@ export default function KelasForm() {
 
                                                 as={TextField}
                                                 type="text"
-                                                label="nama"
+                                                label="Nama Kelas"
                                                 margin="normal"
-                                                name="nama"
+                                                name="kelas"
                                                 required
                                                 fullWidth
-                                                id="email"
+                                                id="kelas"
                                                 autoFocus
                                             />
                                         </Grid>
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={Autocomplete}
-                                                margin="normal"
-                                                fullWidth
-                                                name="jk"
-                                                value={null}
-                                                id="controllable-states-demo"
-                                                options={options}
-                                                renderInput={(params) => <TextField {...params} label="Jenis Kelamin" />}
-                                            />
-                                        </Grid>
+
 
                                         <Grid xs={8}>
                                             <Field size={'small'}
                                                 as={TextField}
                                                 type="text"
-                                                label="nama"
+                                                label="Kode"
                                                 margin="normal"
-                                                name="alamat"
+                                                name="kode"
                                                 required
                                                 fullWidth
-                                                id="email"
+                                                id="kode"
                                                 autoFocus
                                             />
 
@@ -127,81 +131,25 @@ export default function KelasForm() {
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="email"
-                                                label='Status Kepegawaian'
-                                                name="status_pegawai"
+                                                id="deskripsi"
+                                                label='Deskripsi'
+                                                name="desc"
                                                 autoComplete="email"
                                                 autoFocus
 
                                             />
-
-                                        </Grid>
-
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="NIK"
-                                                name="nik"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
-
-                                        </Grid>
-
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="NIP"
-                                                name="nip"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
-
-                                        </Grid>
-
-                                        <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="Email Address"
-                                                name="email"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
-
 
                                         </Grid>
                                         <Grid xs={8}>
-                                            <Field size={'small'}
-                                                as={TextField}
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="No Hanphone  "
-                                                name="hp"
-                                                autoComplete="email"
-                                                autoFocus
-
-                                            />
-
-
+                                            <div style={{ 'marginTop': '15px' }}>
+                                                <Masterdata
+                                                    name={`id_pegawai`}
+                                                    placeholder={'Pilih Wali kelas'}
+                                                    id={`id_pegawai`}
+                                                    multiple={true}
+                                                    fieldname={'pegawai'} />
+                                            </div>
                                         </Grid>
-
                                     </Grid>
                                     <hr />
                                     <Container component="main" maxWidth="xs">
