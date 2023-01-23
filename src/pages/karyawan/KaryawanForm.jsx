@@ -148,7 +148,7 @@ export default function KaryawanForm() {
                                                 }
                                                 value={status}
                                                 id="controllable-states-demo"
-                                                options={options}
+                                                options={status_peg}
                                                 renderInput={(params) => <TextField {...params} label="Status Kepegawaian" />}
                                             />
                                         </Grid>

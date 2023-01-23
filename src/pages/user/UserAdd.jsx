@@ -10,16 +10,17 @@ import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import { Form, Formik, Field } from 'formik'
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Unstable_Grid2';
-import Autocomplete from '@mui/material/Autocomplete';
+import CssBaseline from "@mui/material/CssBaseline"
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Unstable_Grid2'
+import Autocomplete from '@mui/material/Autocomplete'
 import Masterdata from '../../components/Masterdata'
 import axios from 'axios'
 import Swal from "sweetalert2";
-
+import * as Icons from 'feather-icons'
+import Alert from '@mui/material/Alert'
 export default function UserAdd() {
+
 
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
@@ -27,14 +28,15 @@ export default function UserAdd() {
     const [jk, setJk] = useState('');
     const [status, setStatus] = useState('')
     const [level, setLevel] = useState('')
-    const [akseslevel, setAkseslevel] = useState('');
+    const [akseslevel, setAkseslevel] = useState('')
+    const [masterdata, setMasterdata] = useState('')
 
     let params = useParams()
     let navigate = useNavigate()
     useEffect(() => {
         const pathnya = params['*'].split('/')
         console.log(pathnya[0])
-        if (pathnya == 'edit') {
+        if (pathnya === 'edit') {
             setActon('Edit')
         } else {
             setActon('Tambah Data')
@@ -73,11 +75,11 @@ export default function UserAdd() {
             <Formik
                 initialValues={
                     {
-                        nama: '',
-                        jk: '',
-                        alamat: '',
-                        level: '',
-                        status_pegawai: ''
+                        // username: '',
+                        // fk_id: '',
+                        // password: '',
+                        // // level: '',
+                        // email: ''
                     }
                 }
                 validate={(values) => {
@@ -85,7 +87,8 @@ export default function UserAdd() {
                     return errors;
                 }}
                 onSubmit={(values, { setFieldValue }) => {
-                    setFieldValue('level_akses', level)
+                    setFieldValue('level', level)
+                    setFieldValue('username', masterdata)
 
                     const options = {
                         method: 'POST',
@@ -97,7 +100,6 @@ export default function UserAdd() {
                     }
                     axios(options)
                         .then(response => {
-                            // navigate('/master/pegawai')
                             navigate('/app/user')
 
                         }).catch(function (error) {
@@ -115,6 +117,7 @@ export default function UserAdd() {
                                 <div className="card card-body" style={{ 'backgrond': '#ffd', 'margin-left': '10px' }}>
                                     {`${action} User`}
                                     <hr />
+                                    {level && <Alert severity="success">Level Akses {level}</Alert>}
                                     <Grid container spacing={2} columns={18}>
                                         <Grid xs={8}>
                                             <Field size={'small'}
@@ -126,6 +129,7 @@ export default function UserAdd() {
                                                 required
                                                 fullWidth
                                                 id="email"
+                                                value={masterdata}
                                                 autoFocus
                                                 inputProps={
                                                     { readOnly: true, }
@@ -141,21 +145,20 @@ export default function UserAdd() {
                                                     fullWidth
                                                     name="level_akses"
                                                     onChange={(e, value) => {
+                                                        setAkseslevel('')
                                                         setLevel(value.id)
                                                         if (level === 'admin') {
-                                                            setAkseslevel('pegawai')
-                                                        }
-                                                        if (level === 'tata_usaha') {
-                                                            setAkseslevel('pegawai')
-                                                        }
-                                                        if (level === 'guru') {
-                                                            setAkseslevel('pegawai')
-                                                        }
-                                                        if (level === 'siswa') {
-                                                            setAkseslevel('siswa')
-                                                        }
-                                                        Swal.fire('info', level, 'info')
-
+                                                            setAkseslevel('pegawai_login')
+                                                        } else
+                                                            if (level === 'tata_usaha') {
+                                                                setAkseslevel('pegawai_login')
+                                                            } else
+                                                                if (level === 'guru') {
+                                                                    setAkseslevel('pegawai_login')
+                                                                } else
+                                                                    if (level === 'siswa') {
+                                                                        setAkseslevel('siswa')
+                                                                    }
                                                     }}
                                                     id="controllable-states-demo"
                                                     options={level_aksesdata}
@@ -165,7 +168,7 @@ export default function UserAdd() {
                                         </Grid>
 
 
-                                        {console.log(akseslevel.length > 0, 'console detail')}
+                                        {/* {console.log(akseslevel.length > 0, 'console detail')} */}
 
                                         {
                                             akseslevel.length > 0 ?
@@ -179,10 +182,7 @@ export default function UserAdd() {
                                                             setFieldValue={setFieldValue}
                                                             fieldname={`${akseslevel}`}
                                                             multiple={false}
-                                                            onChange={(e) =>
-                                                                // console.log(e,'detail value get here')
-                                                                Swal.fire('info', e, 'info')
-                                                            }
+                                                            setMasterdata={setMasterdata}
                                                         />
                                                     </div>
                                                 </Grid>
@@ -213,9 +213,9 @@ export default function UserAdd() {
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="password"
+                                                id="ulangin_password"
                                                 label="Ulangi Password"
-                                                name="nik"
+                                                name="ulangin_password"
                                                 autoComplete="email"
                                                 autoFocus
                                                 type="password"

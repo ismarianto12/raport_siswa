@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Helmet } from "react-helmet";
 import Chart from "react-apexcharts";
 import { Icon } from '@mui/material';
 import * as Icons from 'react-feather'
+import { getToken } from '../lib/token'
+import Alert from '@mui/material/Alert';
+
 const dataseries = {
+
     monthDataSeries1: {
         prices: [
             8107.85,
@@ -478,7 +482,14 @@ const schema = {
 
 
 const Error = () => {
-    const [state] = React.useState(schema);
+    const [state] = React.useState(schema)
+    const [username, setUsername] = useState('')
+
+    useEffect(() => {
+        const initusername = getToken()
+        setUsername(initusername)
+
+    }, []);
 
     return (<>
         <Helmet>
@@ -489,15 +500,20 @@ const Error = () => {
 
         <div className="row">
             <div className="col-md-2 stretch-card transparent">
-                <img src="/logo.png" className={'img-responsive'} style={{ 'width': '180px','height':'180px' }} />&nbsp;&nbsp;
+                <img src="/logo.png" className={'img-responsive'} style={{ 'width': '180px', 'height': '180px' }} />&nbsp;&nbsp;
             </div>
-            <div className="col-md-9 mb-4">
-                <p> <h4><Icons.User /> Siakad Akademik Sekolah </h4>
+            <div className="col-md-9 mb-4" style={{ 'marginLeft': '40px' }}>
+                <Alert severity="success">
+                    <p> <h4><Icons.User /> Siakad Akademik Sekolah </h4></p></Alert>
                     <hr />
-                    <Icons.Users /> Sistem Rapor siswa terintegrasi</p>
-                <p>
-                    Jl. Pasiruncal Kp. Sembahdayun Desa Mekarja Kec. Sukaraja Kab. Tasikmalay, Tasikmalaya
-                </p>
+                    <Alert severity="success">
+                        <p> <Icons.Users /> Sistem Rapor siswa terintegrasi</p></Alert>
+                        <Alert severity="success">
+
+                    Jl. Pasiruncal Kp. Sembahdayun Desa Mekarja Kec. Sukaraja Kab. Tasikmalay, Tasikmalaya</Alert>
+ 
+
+                {username && <Alert severity="success">Hy Selamat Datan Kembali {username}</Alert>}
 
 
             </div>

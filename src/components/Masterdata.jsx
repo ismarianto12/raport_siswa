@@ -40,15 +40,15 @@ class Masterdata extends React.Component {
         this.setState({
             loading: true,
         })
-
         const payload = {
             parameter: this.props.parameter,
             id: this.props.id
         }
+        const backurl = this.fieldname === 'pegawai_login' ? 'pegawai' : this.fieldname
         const options = {
             method: 'GET',
             data: JSON.parse(JSON.stringify(payload)),
-            url: `${process.env.REACT_APP_API_URL}/v1/${this.fieldname}`,
+            url: `${process.env.REACT_APP_API_URL}/v1/${backurl}`,
             headers: {
                 'Content-type': 'Application/json',
             }
@@ -80,6 +80,10 @@ class Masterdata extends React.Component {
                             return ({
                                 'value': a?.id, 'label': `${a?.nama} - ${a?.nip}`
                             })
+                        } else if (this.fieldname === 'pegawai_login') {
+                            return ({
+                                'value': a?.nip, 'label': `${a?.nama} - ${a?.nip}`
+                            })
 
                         } else if (this.fieldname === 'level_akses') {
                             return ({
@@ -110,35 +114,45 @@ class Masterdata extends React.Component {
 
     render() {
 
-        console.log(this.state.data, 'datanya dari ser')
-
-        const options = [
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' }
-        ];
-
-        console.log(this.state.data.length > 0, 'master data')
         return (
             <>
-                <Field size={'small'}
-                    as={Autocomplete}
-                    margin="normal"
-                    fullWidth
-                    name={this.props.name}
 
-                    onChange={(e, value) => {
+                { this.props.setMasterdata ?
+                    <Field
+                        {...this.props}
+                        size={'small'}
+                        as={Autocomplete}
+                        margin="normal"
+                        fullWidth
+                        name={this.props.name} s
+                        onChange={(e, value) => {
 
-                        if (this.state.data.length === 0) {
-                            Swal.fire('info', `data master ${this.fieldname} kosong silahkan tambahkan`, 'info')
-                        }
-                        console.log(this.state.datacomp, 'data anda')
-                        this.setFieldValue(`${this.name}`, value.value)
-                    }}
-                    id="controllable-states-demo"
-                    options={this.state.data.length > 0 ? this.state.data : []}
-                    renderInput={(params) => <TextField {...params} value={this.state.datacomp?.value} label={`${this.placeholder}`} />}
-                />
+                            this.props.setMasterdata(value.value)
+                            this.setFieldValue(`${this.name}`, value.value)
+                        }}
+                        id="controllable-states-demo"
+                        options={this.state.data.length > 0 ? this.state.data : []}
+                        renderInput={(params) => <TextField {...params} value={this.state.datacomp?.value} label={`${this.placeholder}`} />}
+                    />
+
+                    :
+
+                    <Field
+                        {...this.props}
+                        size={'small'}
+                        as={Autocomplete}
+                        margin="normal"
+                        fullWidth
+                        name={this.props.name} s
+                        onChange={(e, value) => {
+                            this.setFieldValue(`${this.name}`, value.value)
+                        }}
+                        id="controllable-states-demo"
+                        options={this.state.data.length > 0 ? this.state.data : []}
+                        renderInput={(params) => <TextField {...params} value={this.state.datacomp?.value} label={`${this.placeholder}`} />}
+                    />
+
+                }
             </>
 
         )
