@@ -10,7 +10,7 @@ export const SidebarData = [
     {
         title: 'Master Data',
         path: '/overview',
-        icon: <AiIcons.AiFillHome />,
+        icon: <Icon.Airplay />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
@@ -49,7 +49,7 @@ export const SidebarData = [
     {
         title: 'Penilaian',
         path: '/overview',
-        icon: <AiIcons.AiFillHome />,
+        icon: <Icon.Database />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
@@ -68,7 +68,7 @@ export const SidebarData = [
     {
         title: 'Laporan',
         path: '/reports',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <Icon.Paperclip />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
 
@@ -84,7 +84,7 @@ export const SidebarData = [
     {
         title: 'Aplikasi',
         path: '/messages',
-        icon: <FaIcons.FaEnvelopeOpenText />,
+        icon: <Icon.Users />,
 
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,

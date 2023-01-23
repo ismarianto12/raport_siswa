@@ -44,17 +44,27 @@ export default LoginActions.reducer
 export const loginAcc = (data, navigate) => async dispatch => {
     try {
         dispatch(loginStart());
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/v1/login`, data)
-        const resdata = response.data
-        let session = {
-            "id": resdata.id,
-            "level": resdata.level,
-            "username": resdata.username
-        }
-        localStorage.setItem('token', JSON.stringify(session))
-        dispatch(loginSuccess(response.data))
-        console.log(session)
-        navigate('/')
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/v1/login`, data).then(response => {
+
+            const resdata = response.data
+            let session = {
+                "id": resdata.id,
+                "level": resdata.level,
+                "username": resdata.username
+            }
+            localStorage.setItem('token', JSON.stringify(session))
+            dispatch(loginSuccess(response.data))
+            console.log(session)
+            navigate('/')
+
+        }).catch(function (error) {
+            // console.log(error.code, 'console.log')
+            if (error.code !== 'ERR_NETWORK') {
+                Swal.fire('error', 'Username dan password salah', 'error')
+            } else {
+                Swal.fire('error', 'Backend tidak response dengan baik silahkan start xampp atau server backend ', 'error')
+            }
+        })
 
     } catch (error) {
         Swal.fire('error', 'username dan password salah', 'error')

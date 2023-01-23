@@ -1,6 +1,8 @@
 import React from 'react'
 import { Helmet } from "react-helmet";
 import Chart from "react-apexcharts";
+import { Icon } from '@mui/material';
+import * as Icons from 'react-feather'
 const dataseries = {
     monthDataSeries1: {
         prices: [
@@ -487,12 +489,17 @@ const Error = () => {
 
         <div className="row">
             <div className="col-md-2 stretch-card transparent">
-                <img src="/logo.png" className={'img-responsive'} style={{ 'width': '100px' }} />
+                <img src="/logo.png" className={'img-responsive'} style={{ 'width': '180px','height':'180px' }} />&nbsp;&nbsp;
             </div>
-            <div className="col-md-6 mb-4 stretch-card transparent">
-                <p> <h4>Dashboard Apps </h4>
-                    <br />
-                Sistem Rapor siswa</p>
+            <div className="col-md-9 mb-4">
+                <p> <h4><Icons.User /> Siakad Akademik Sekolah </h4>
+                    <hr />
+                    <Icons.Users /> Sistem Rapor siswa terintegrasi</p>
+                <p>
+                    Jl. Pasiruncal Kp. Sembahdayun Desa Mekarja Kec. Sukaraja Kab. Tasikmalay, Tasikmalaya
+                </p>
+
+
             </div>
         </div>
         <br />

@@ -84,7 +84,7 @@ class User extends React.Component {
     render() {
 
         const resdata = this.state.data.length > 0 ? this.state.data : []
-        this.array = resdata.map(result => [result.username, result.level, result.id])
+        this.array = resdata.map(result => [result.username, result.level ? result.level.toUpperCase() : "Kosong", result.id])
         const columns = [
             { name: 'Username' }, { name: 'Level Akses' }, {
                 name: "Action",
@@ -98,6 +98,12 @@ class User extends React.Component {
                                 }} >
                                     Delete
                             </button>
+                                <NavLink
+                                    to={`/app/user/edit/${tableMeta.rowData[2]}`}
+                                    className={'btn btn-primary btn-sm'}
+                                >
+                                    Edit
+                          </NavLink>
                                 {/* <Action url={`/app/karyawan/edit/${tableMeta.rowData[2]}`} title="Edit" classname="btn btn-warning btn-sm" /> */}
                             </>
                         );

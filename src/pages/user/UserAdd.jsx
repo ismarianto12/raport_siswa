@@ -180,8 +180,8 @@ export default function UserAdd() {
                                                             fieldname={`${akseslevel}`}
                                                             multiple={false}
                                                             onChange={(e) =>
-                                                                console.log(e,'detail value get here')
-                                                                // Swal.fire('info', e, 'info')
+                                                                // console.log(e,'detail value get here')
+                                                                Swal.fire('info', e, 'info')
                                                             }
                                                         />
                                                     </div>
