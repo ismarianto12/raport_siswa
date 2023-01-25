@@ -20,8 +20,6 @@ import Swal from "sweetalert2";
 import * as Icons from 'feather-icons'
 import Alert from '@mui/material/Alert'
 export default function UserAdd() {
-
-
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
@@ -87,9 +85,7 @@ export default function UserAdd() {
                     return errors;
                 }}
                 onSubmit={(values, { setFieldValue }) => {
-                    setFieldValue('level', level)
-                    setFieldValue('username', masterdata)
-
+                    console.log(values)
                     const options = {
                         method: 'POST',
                         data: JSON.parse(JSON.stringify(values)),
@@ -111,6 +107,17 @@ export default function UserAdd() {
                 {({ values, onSubmit, errors, setFieldValue, getFieldValue }) => {
                     console.log(akseslevel, 'akses master')
 
+                    if (level === 'admin') {
+                        setAkseslevel('pegawai_login')
+                    } else if (level === 'tata_usaha') {
+                        setAkseslevel('pegawai_login')
+                    } else if (level === 'guru') {
+                        setAkseslevel('pegawai_login')
+                    } else if (level === 'siswa') {
+                        setAkseslevel('siswa')
+                    } else if (level === 'walikelas') {
+                        setAkseslevel('pegawai_login')
+                    }
                     return (
                         <>
                             <Form>
@@ -147,18 +154,7 @@ export default function UserAdd() {
                                                     onChange={(e, value) => {
                                                         setAkseslevel('')
                                                         setLevel(value.id)
-                                                        if (level === 'admin') {
-                                                            setAkseslevel('pegawai_login')
-                                                        } else
-                                                            if (level === 'tata_usaha') {
-                                                                setAkseslevel('pegawai_login')
-                                                            } else
-                                                                if (level === 'guru') {
-                                                                    setAkseslevel('pegawai_login')
-                                                                } else
-                                                                    if (level === 'siswa') {
-                                                                        setAkseslevel('siswa')
-                                                                    }
+
                                                     }}
                                                     id="controllable-states-demo"
                                                     options={level_aksesdata}
@@ -198,8 +194,8 @@ export default function UserAdd() {
                                                 fullWidth
                                                 id="password"
                                                 label="Password"
-                                                name="nik"
-                                                autoComplete="email"
+                                                name="password"
+                                                autoComplete="text"
                                                 autoFocus
                                                 type="password"
 
@@ -253,8 +249,8 @@ export default function UserAdd() {
                                         // sx={{ mt: 5, mb: 2 }}
                                         >
                                             Simpan data
-            </Button>
-&nbsp;
+                                        </Button>
+                                        &nbsp;
                                         <Button
                                             type="submit"
                                             // fullWidth
@@ -263,7 +259,7 @@ export default function UserAdd() {
                                             variant="contained"
                                         >
                                             Batal
-            </Button>
+                                        </Button>
                                     </Container>
                                 </div>
                             </Form>

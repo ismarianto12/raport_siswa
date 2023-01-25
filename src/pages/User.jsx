@@ -27,9 +27,9 @@ class User extends React.Component {
     componentDidMount() {
         this.fetdata()
     }
-    componentWillUnmount() {
-        this.fetdata()
-    }
+    // componentWillUnmount() {
+    //     this.fetdata()
+    // }
     fetdata() {
         const datanya = [];
         const data_row_array = [];
@@ -62,7 +62,7 @@ class User extends React.Component {
     }
     async karyawandelete(id) {
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/v1/pegawai/delete/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/v1/login/delete/${id}`,
             data: {
                 id: id
             },
@@ -73,7 +73,7 @@ class User extends React.Component {
 
         }
         await axios(config).then(r => {
-            this.fetdata()
+            return this.fetdata()
         }).catch(function (error) {
             console.log(error)
         })
@@ -97,13 +97,13 @@ class User extends React.Component {
                                     this.delete(tableMeta.rowData[2])
                                 }} >
                                     Delete
-                            </button>
+                                </button>
                                 <NavLink
                                     to={`/app/user/edit/${tableMeta.rowData[2]}`}
                                     className={'btn btn-primary btn-sm'}
                                 >
                                     Edit
-                          </NavLink>
+                                </NavLink>
                                 {/* <Action url={`/app/karyawan/edit/${tableMeta.rowData[2]}`} title="Edit" classname="btn btn-warning btn-sm" /> */}
                             </>
                         );
@@ -136,7 +136,7 @@ class User extends React.Component {
                             className={'btn btn-primary'}
                         >
                             Tambah data
-                          </NavLink>
+                        </NavLink>
                     </>
 
                 }
