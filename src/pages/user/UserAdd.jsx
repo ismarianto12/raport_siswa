@@ -73,22 +73,26 @@ export default function UserAdd() {
             <Formik
                 initialValues={
                     {
-                        // username: '',
-                        // fk_id: '',
-                        // password: '',
-                        // // level: '',
-                        // email: ''
+                        username: masterdata,
+                        fk_id: '',
+                        password: '',
+                        level: '',
+                        email: ''
                     }
                 }
                 validate={(values) => {
                     const errors = {};
                     return errors;
                 }}
-                onSubmit={(values, { setFieldValue }) => {
-                    console.log(values)
+                onSubmit={(values, setFieldValue) => {
+                    const marging = {
+                        ...values,
+                        username: masterdata,
+                        level: level,
+                    }
                     const options = {
                         method: 'POST',
-                        data: JSON.parse(JSON.stringify(values)),
+                        data: JSON.parse(JSON.stringify(marging)),
                         url: `${process.env.REACT_APP_API_URL}/v1/login/insert`,
                         headers: {
                             'Content-type': 'Application/json',
@@ -105,8 +109,6 @@ export default function UserAdd() {
             >
 
                 {({ values, onSubmit, errors, setFieldValue, getFieldValue }) => {
-                    console.log(akseslevel, 'akses master')
-
                     if (level === 'admin') {
                         setAkseslevel('pegawai_login')
                     } else if (level === 'tata_usaha') {
@@ -136,12 +138,14 @@ export default function UserAdd() {
                                                 required
                                                 fullWidth
                                                 id="email"
-                                                value={masterdata}
                                                 autoFocus
+                                                value={masterdata}
                                                 inputProps={
                                                     { readOnly: true, }
                                                 }
                                             />
+
+                                            <small style={{ 'fontStyle': 'italic' }}>Username otomatis di generate</small>
                                         </Grid>
 
                                         <Grid xs={8}>
