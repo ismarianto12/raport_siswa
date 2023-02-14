@@ -74,8 +74,14 @@ export const SidebarData = [
 
         subNav: [
             {
-                title: 'Penilaian',
+                title: 'Siswa',
                 path: '/master/laporan',
+                icon: <IoIcons.IoIosPaper />,
+                cName: 'sub-nav'
+            },
+            {
+                title: 'Guru',
+                path: '/master/pegawai',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             }
@@ -143,8 +149,14 @@ export const Murid = [
 
         subNav: [
             {
-                title: 'Penilaian',
+                title: 'Siswa',
                 path: '/master/laporan',
+                icon: <IoIcons.IoIosPaper />,
+                cName: 'sub-nav'
+            },
+            {
+                title: 'Guru',
+                path: '/master/pegawai',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             }

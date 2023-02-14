@@ -35,7 +35,6 @@ export default function MapelAdd() {
     let navigate = useNavigate()
     const dispatch = useDispatch()
 
-
     useEffect(() => {
         const pathnya = params['*'].split('/')
         console.log(pathnya[0])
@@ -115,7 +114,6 @@ export default function MapelAdd() {
                                                 autoFocus
                                             />
                                         </Grid>
-
 
                                         <Grid xs={8}>
                                             <Field size={'small'}
