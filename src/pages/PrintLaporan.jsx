@@ -55,6 +55,7 @@ class PrintLaporan extends React.Component {
             }
         }
         await axios(config).then((restdata) => {
+            // count(restdata.data.),
             this.setState({
                 JumlahSiswa: restdata.data?.length,
             })
@@ -75,16 +76,25 @@ class PrintLaporan extends React.Component {
 
 
 
+
+
+        let ratanya = 0
+        console.log(this.state.datas, 'detail console')
+        this.state.datas.forEach((a, b) => {
+            ratanya += parseInt(a.bobot)
+        })
+        console.log(ratanya, 'status')
+
         const WaliKelas = this.state.datas.nama
         const KepalaSekolah = this.state.datas.nama
-        const RataNilai = ""
-        const TotalNilai = ""
+        const RataNilai = ratanya / this.state.datas?.length
+        const TotalNilai = ratanya
 
         return (
             this.state.datas?.length > 0 ?
 
                 <>
-                    { this.state.loading ? <>
+                    {this.state.loading ? <>
                         <div style={{
                             'margin': '0 auto'
 
@@ -172,7 +182,7 @@ class PrintLaporan extends React.Component {
                                             })
                                             : <div style={{ 'textAlign': 'center' }}>
                                                 Data Penilaian belum tersedia
-                                    </div>
+                                            </div>
                                     }
 
 
@@ -207,7 +217,7 @@ class PrintLaporan extends React.Component {
                                     </tr>
                                     <tr>
                                         <td style={{ textAlign: 'center' }}>({WaliKelas})<br />
-        NIP</td>
+                                            NIP</td>
                                         <td>
                                             <p style={{ textAlign: 'center' }}>({KepalaSekolah})</p>
                                             <p style={{ textAlign: 'center' }}>NIP</p>

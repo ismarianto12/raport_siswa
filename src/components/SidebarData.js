@@ -39,11 +39,7 @@ export const SidebarData = [
                 path: '/app/karyawan',
                 icon: <IoIcons.IoIosPaper />
             }
-            // {
-            //     title: 'Kurikulum',
-            //     path: '/app/kurikulum',
-            //     icon: <IoIcons.IoIosPaper />
-            // }
+
         ]
     },
     {
