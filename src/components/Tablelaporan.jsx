@@ -155,7 +155,6 @@ class Tablelaporan extends React.Component {
                     title={
                         <>
 
-                            <Carilaporan semester={this.semester} tahun_akademik={this.tahun_akademik} />
                             <p><Icon.List />{`Silahkan pilih data penilaian seusuai semester`}</p>
 
                         </>

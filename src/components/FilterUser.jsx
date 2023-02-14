@@ -83,7 +83,7 @@ class FilterUser extends React.Component {
                                     <Grid container spacing={2} columns={18}>
                                         <Grid xs={8}>
                                             <Masterdata
-
+                                                setMasterdata={this.props.setMasterdata}
                                                 name={'level_akses'}
                                                 placeholder={'Pilih level akses'}
                                                 id={'level'}

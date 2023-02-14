@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from 'axios'
 import { Navigate, useNavigate, NavLink, redirect } from 'react-router-dom';
-// const navigate = useNavigate()
 import { createBrowserHistory } from 'history';
 
 const history = createBrowserHistory();

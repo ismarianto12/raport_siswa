@@ -20,7 +20,7 @@ import MapelAdd from './pages/mapel/MapelAdd'
 
 import Kurikulum from './pages/kurikulum/Kurikulum';
 import Karyawan from './pages/karyawan/Karyawan';
-
+import Ubahnilai from './pages/Ubahnilai.tsx';
 import Raport from './pages/raport/Raport';
 import Laporan from './pages/laporan/Laporan';
 import SiswaForm from './pages/siswa/SiswaForm';
@@ -46,9 +46,11 @@ export default function Web() {
                     <Route path='/app/karyawan' element={<ProtectedRoute><Karyawan /></ProtectedRoute>} />
                     <Route path='/app/karyawan/*' element={<ProtectedRoute><KaryawanForm /></ProtectedRoute>} />
 
-
                     <Route path='/app/kelas' element={<ProtectedRoute><Kelas /></ProtectedRoute>} />
                     <Route path='/app/kelas/*' element={<ProtectedRoute><KelasForm /></ProtectedRoute>} />
+
+                    <Route path='/app/ubahnilai' element={<ProtectedRoute><Ubahnilai /></ProtectedRoute>} />
+                    <Route path='/app/ubahnilai/*' element={<ProtectedRoute><Ubahnilai /></ProtectedRoute>} />
 
                     {/* <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} /> */}
                     <Route path='/app/raport' element={<ProtectedRoute><Raport /></ProtectedRoute>} />
@@ -57,8 +59,8 @@ export default function Web() {
                     <Route path='/app/identitas' element={<ProtectedRoute><Identitas /></ProtectedRoute>} />
                     <Route path='/app/user' element={<ProtectedRoute><User /></ProtectedRoute>} />
                     <Route path='/app/user/*' element={<ProtectedRoute><UserAdd /></ProtectedRoute>} />
-                    
-                    
+
+
                     <Route path='/app/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path='/app/level' element={<ProtectedRoute><Level /></ProtectedRoute>} />
                     <Route path='/app/level/create' element={<ProtectedRoute><FormLevel /></ProtectedRoute>} />

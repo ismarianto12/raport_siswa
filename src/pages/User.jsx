@@ -21,19 +21,32 @@ import * as Icons from "react-feather";
 class User extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { data: [], setMasterdata: '' };
         this.array = [];
     }
     componentDidMount() {
         this.fetdata()
+        console.log(this.state.setMasterdata)
     }
     // componentWillUnmount() {
     //     this.fetdata()
     // }
+    componentDidUpdate() {
+        // if (this.state.setMasterdata.nextState !== '') {
+        //     this.fetdata()
+
+        // } else {
+        //     this.fetdata()
+
+        // }
+    }
     fetdata() {
         const datanya = [];
         const data_row_array = [];
-        axios.get(`${process.env.REACT_APP_API_URL}/v1/login`)
+        const level = this.state.setMasterdata.nextState
+        axios.get(`${process.env.REACT_APP_API_URL}/v1/login?level=${level}`, {
+            level: this.state.setMasterdata ? this.state.setMasterdata : ''
+        })
             .then(response => {
                 console.log(response.data, 'detail data response')
                 this.setState({ data: response.data?.data })
@@ -41,6 +54,12 @@ class User extends React.Component {
             .catch(error => {
                 console.log(error);
             });
+    }
+
+
+    handlechange() {
+        console.log('berhasil')
+        this.fetdata()
     }
 
 
@@ -59,6 +78,9 @@ class User extends React.Component {
                 this.fetdata()
             }
         })
+    }
+    update = (nextState) => {
+        this.setState(({ setMasterdata }) => ({ setMasterdata: { ...setMasterdata, nextState } }));
     }
     async karyawandelete(id) {
         const config = {
@@ -82,6 +104,8 @@ class User extends React.Component {
 
 
     render() {
+
+        console.log(this.state.setMasterdata.nextState, 'detail nya dalaah')
 
         const resdata = this.state.data.length > 0 ? this.state.data : []
         this.array = resdata.map(result => [result.username, result.level ? result.level.toUpperCase() : "Kosong", result.id])
@@ -130,7 +154,7 @@ class User extends React.Component {
                         </h5>
                         {/* <Carilaporan 
                         semester={this.semester} tahun_akademik={this.tahun_akademik} /> */}
-                        <FilterUser semester={this.semester} tahun_akademik={this.tahun_akademik} />
+                      
                         <NavLink
                             to='/app/user/add'
                             className={'btn btn-primary'}

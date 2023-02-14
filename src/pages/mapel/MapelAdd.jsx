@@ -29,6 +29,7 @@ export default function MapelAdd() {
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
+    const [masterdata, setMasterdata] = useState('')
 
     let params = useParams()
     let navigate = useNavigate()
@@ -76,7 +77,6 @@ export default function MapelAdd() {
                     return errors;
                 }}
                 onSubmit={(values) => {
-                    // console.log(values, 'formik value get ..')
                     toast('🦄 Data berhasil di simpan!', {
                         position: "top-right",
                         autoClose: 5000,
@@ -93,7 +93,7 @@ export default function MapelAdd() {
                 }}
             >
 
-                {({ values, onSubmit, errors }) => {
+                {({ values, onSubmit, setFieldValue, errors }) => {
 
                     return (
                         <>
@@ -147,11 +147,16 @@ export default function MapelAdd() {
                                         </Grid>
                                         <Grid xs={8}>
                                             <Masterdata
-                                                name={`pengampu`}
-                                                placeholder={'Pilih guru pengampu'}
-                                                id={`id_pengampu`}
-                                                multiple={true}
-                                                fieldname={'pegawai'} />
+                                                name={`pegawai`}
+                                                placeholder={`Pilih Guru Pengampu`}
+                                                id={`pegawai`}
+                                                setFieldValue={setFieldValue}
+                                                fieldname={`pegawai`}
+                                                multiple={false}
+                                                setMasterdata={setMasterdata}
+                                            />
+
+
                                         </Grid>
 
                                         <hr />
@@ -167,9 +172,9 @@ export default function MapelAdd() {
                                                 sx={{ mt: 5, mb: 2 }}
                                             >
                                                 Save
-            </Button>
-&nbsp;
-                                        <Button
+                                            </Button>
+                                            &nbsp;
+                                            <Button
                                                 type="submit"
                                                 // fullWidth
                                                 sx={{ mt: 5, mb: 2 }}
@@ -179,7 +184,7 @@ export default function MapelAdd() {
                                                 variant="contained"
                                             >
                                                 Batal
-            </Button>
+                                            </Button>
                                         </Container>
                                     </Grid>
                                 </div>

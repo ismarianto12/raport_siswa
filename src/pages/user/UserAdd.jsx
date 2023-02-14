@@ -2,10 +2,7 @@ import Karyawantable from "../../components/karyawan";
 import { useEffect, useState } from 'react'
 import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
-
-
 import TextField from '@mui/material/TextField'
-
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import { Form, Formik, Field } from 'formik'
@@ -28,14 +25,19 @@ export default function UserAdd() {
     const [level, setLevel] = useState('')
     const [akseslevel, setAkseslevel] = useState('')
     const [masterdata, setMasterdata] = useState('')
+    const [initdata, setInitdata] = useState({
+
+    });
 
     let params = useParams()
     let navigate = useNavigate()
     useEffect(() => {
         const pathnya = params['*'].split('/')
-        console.log(pathnya[0])
-        if (pathnya === 'edit') {
+        console.log(pathnya[0], 'detail parameter')
+        if (pathnya[0] === 'edit') {
+            fetchtEdit(pathnya[1])
             setActon('Edit')
+
         } else {
             setActon('Tambah Data')
         }
@@ -52,6 +54,32 @@ export default function UserAdd() {
 
     }, [])
 
+
+    const fetchtEdit = async (id) => {
+        console.log('gak kepanggil')
+        const options = {
+            method: 'GET',
+            url: `${process.env.REACT_APP_API_URL}/v1/login/show/${id}`,
+            headers: {
+                'Content-type': 'Application/json',
+            }
+        }
+        await axios(options)
+            .then(response => {
+                const datanya = response.data.data
+                console.log(datanya[0].username, 'detail datanya')
+                return setInitdata({
+                    username: datanya[0].username,
+                    fk_id: datanya[0].fk_id,
+                    password: '',
+                    level_akses: datanya[0].level,
+                    email: datanya[0]?.email,
+                })
+            }).catch(function (error) {
+                const datanya = []
+                return datanya
+            })
+    }
 
     const back = () => {
         navigate('/app/user')
@@ -71,15 +99,8 @@ export default function UserAdd() {
     return (
         <>
             <Formik
-                initialValues={
-                    {
-                        username: masterdata,
-                        fk_id: '',
-                        password: '',
-                        level: '',
-                        email: ''
-                    }
-                }
+                initialValues={initdata}
+                enableReinitialize={true}
                 validate={(values) => {
                     const errors = {};
                     return errors;
@@ -109,6 +130,8 @@ export default function UserAdd() {
             >
 
                 {({ values, onSubmit, errors, setFieldValue, getFieldValue }) => {
+                    console.log(initdata, 'detail data')
+
                     if (level === 'admin') {
                         setAkseslevel('pegawai_login')
                     } else if (level === 'tata_usaha') {
@@ -141,7 +164,9 @@ export default function UserAdd() {
                                                 autoFocus
                                                 value={masterdata}
                                                 inputProps={
-                                                    { readOnly: true, }
+                                                    {
+                                                        readOnly: true,
+                                                    }
                                                 }
                                             />
 

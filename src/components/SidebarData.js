@@ -106,11 +106,24 @@ export const SidebarData = [
 ];
 // murid
 export const Murid = [
-
+    {
+        title: 'Jadwal Siswa',
+        path: '/master/mapel',
+        icon: <Icon.Users />,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+            {
+                title: 'Jadwal',
+                path: '/master/mapel',
+                icon: <IoIcons.IoIosPaper />
+            }
+        ]
+    },
     {
         title: 'Penilaian Siswa',
         path: '/overview',
-        icon: <Icon.List />,
+        icon: <Icon.Airplay />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [

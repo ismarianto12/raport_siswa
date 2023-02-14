@@ -21,30 +21,18 @@ export default function KelasForm() {
     const [reqdata, setReqdata] = useState([]);
     const [karyawandata, setkaryawandata] = useState();
     const [action, setActon] = useState([])
-
+    const [masterdata, setMasterdata] = useState('')
     let params = useParams()
     let navigate = useNavigate()
 
-
     useEffect(() => {
         const pathnya = params['*'].split('/')
-        console.log(pathnya[0])
         if (pathnya == 'edit') {
             setActon('Edit')
         } else {
             setActon('Tambah Data')
         }
-
-        const karyawan = {
-            nama: reqdata.nama,
-            jk: reqdata.jk,
-            alamat: reqdata.alamat,
-            level: reqdata.level,
-            status_pegawai: reqdata.status_pegawai
-        }
-        setkaryawandata(karyawan)
-        console.log(karyawandata, 'data karyawan')
-    }, []);
+    }, [])
 
     const back = () => {
         navigate('/app/kelas')
@@ -86,7 +74,7 @@ export default function KelasForm() {
                 }}
             >
 
-                {({ values, onSubmit, errors }) => {
+                {({ values, onSubmit, setFieldValue, errors }) => {
 
                     return (
                         <>
@@ -143,11 +131,14 @@ export default function KelasForm() {
                                         <Grid xs={8}>
                                             <div style={{ 'marginTop': '15px' }}>
                                                 <Masterdata
-                                                    name={`id_pegawai`}
-                                                    placeholder={'Pilih Wali kelas'}
-                                                    id={`id_pegawai`}
-                                                    multiple={true}
-                                                    fieldname={'pegawai'} />
+                                                    name={`pegawai`}
+                                                    placeholder={`Pilih Wali kelas`}
+                                                    id={`pegawai`}
+                                                    setFieldValue={setFieldValue}
+                                                    fieldname={`pegawai`}
+                                                    multiple={false}
+                                                    setMasterdata={setMasterdata}
+                                                />
                                             </div>
                                         </Grid>
                                     </Grid>
@@ -156,24 +147,21 @@ export default function KelasForm() {
 
                                         <Button
                                             type="submit"
-                                            // fullWidth
                                             color="primary"
                                             onSubmit={onSubmit}
                                             variant="contained"
-                                        // sx={{ mt: 5, mb: 2 }}
                                         >
                                             Simpan data
-            </Button>
-&nbsp;
+                                        </Button>
+                                        &nbsp;
                                         <Button
                                             type="submit"
-                                            // fullWidth
                                             onClick={back}
                                             color="secondary"
                                             variant="contained"
                                         >
                                             Batal
-            </Button>
+                                        </Button>
                                     </Container>
                                 </div>
                             </Form>
