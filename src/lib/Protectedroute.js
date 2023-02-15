@@ -4,7 +4,6 @@ const ProtectedRoute = ({
   children,
 }) => {
   const user = localStorage.getItem("token") ? localStorage.getItem("token") : []
-  console.log(user == 0)
   if (user == 0) {
     return <Navigate to={redirectPath} replace />;
   }

@@ -125,7 +125,7 @@ export const Murid = [
     {
         title: 'Penilaian Siswa',
         path: '/overview',
-        icon: <Icon.Airplay />,
+        icon: <Icon.Book />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
         subNav: [
@@ -146,13 +146,13 @@ export const Murid = [
         subNav: [
             {
                 title: 'Siswa',
-                path: '/master/laporan',
+                path: '/master/siswa?ref=laporan',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             },
             {
                 title: 'Guru',
-                path: '/master/pegawai',
+                path: '/app/karyawan?ref=laporan',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             }
@@ -225,33 +225,19 @@ export const Guru = [
 
         subNav: [
             {
-                title: 'Penilaian',
-                path: '/master/laporan',
+                title: 'Siswa',
+                path: '/master/siswa?ref=laporan',
+                icon: <IoIcons.IoIosPaper />,
+                cName: 'sub-nav'
+            },
+            {
+                title: 'Guru',
+                path: '/app/karyawan?ref=laporan',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             }
         ]
     },
-    // {
-    //     title: 'Aplikasi',
-    //     path: '/messages',
-    //     icon: <FaIcons.FaEnvelopeOpenText />,
 
-    //     iconClosed: <RiIcons.RiArrowDownSFill />,
-    //     iconOpened: <RiIcons.RiArrowUpSFill />,
-
-    //     subNav: [
-    //         {
-    //             title: 'Akses Login',
-    //             path: '/app/user',
-    //             icon: <IoIcons.IoIosPaper />
-    //         },
-    //         {
-    //             title: 'Indentitas Aplikasi',
-    //             path: '/app/identitas',
-    //             icon: <IoIcons.IoIosPaper />
-    //         }
-    //     ]
-    // },
 
 ];

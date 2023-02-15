@@ -17,8 +17,7 @@ import { Form, Formik, Field } from 'formik'
 import SearchRaport from "./SearchRaport"
 import * as  Icon from 'react-feather'
 import Carilaporan from "./Carilaporan";
-
-
+import { Midleware } from "../lib/token";
 class Tablelaporan extends React.Component {
     constructor(props) {
         super(props);
@@ -116,7 +115,7 @@ class Tablelaporan extends React.Component {
     }
     render() {
 
-        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk, result.id]);
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn ? result.nisn : '123456789', result.kelas, result.tahun_masuk, result.id]);
         const columns = [
             { name: 'Nama' }, { name: 'NISN' }, { name: 'JK' }, { name: 'Rerata' }, { name: 'Semester' }, {
                 name: "Action",
@@ -127,8 +126,8 @@ class Tablelaporan extends React.Component {
                             <>
                                 <Action blank={true} url={`/master/laporan/print/${tableMeta.rowData[5]}`} title={`Print data`} classname="btn btn-warning btn-sm" />
                                 <br />
-                                {/* <Action url={`#`} onclick={this.konfirmasi} title={`Ubah Penilaian`} classname="btn btn-info btn-sm" /> */}
-                                <button className="btn btn-info btn-sm" onClick={this.konfirmasi}> Ubah Penilaian </button>
+                                {Midleware() === 'guru' || Midleware() === 'guru' ?
+                                    <button className="btn btn-info btn-sm" onClick={this.konfirmasi}> Ubah Penilaian </button> : ""}
 
                             </>
                         )

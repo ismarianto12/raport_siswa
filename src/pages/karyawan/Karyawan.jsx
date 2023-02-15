@@ -12,15 +12,21 @@ import {
 import { connect } from 'react-redux'
 import { NavLink, Route } from 'react-router-dom'
 import Action from "../../components/Action";
+import { Midleware } from "../../lib/token";
 
 class Karyawan extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { data: [], param: '' };
         this.array = [];
+
     }
     componentDidMount() {
         this.fetdata()
+        let search = window.location.search
+        let params = new URLSearchParams(search)
+        let foo = params.get('ref')
+        this.setState({ param: foo })
     }
     componentWillUnmount() {
         this.fetdata()
@@ -71,34 +77,36 @@ class Karyawan extends React.Component {
         }).catch(function (error) {
             console.log(error)
         })
-    }
-
-
+    }  
 
     render() {
 
-
-        this.array = this.state.data.map(result => [result.nama, result.jk, result.nip, result.status_pegawai, result.tahun_masuk, result.id]);
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nip, result.status_pegawai ? result.status_pegawai : 'PNS', result.tahun_masuk ? result.tahun_masuk : 'Kosong', Midleware() === 'admin' ?
+            result.id : '']);
         const columns = [
-            { name: 'Nama' }, { name: 'J/K' }, { name: 'NIP' }, { name: 'Status Pegawai' }, { name: 'Tahun Masuk' }, {
-                name: "Action",
-                options: {
-                    filter: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
-                        return (
-                            <>
-                                <button className="btn btn-danger btn-sm" onClick={() => {
-                                    this.delete(tableMeta.rowData[5])
-                                }} >
-                                    Delete
-                            </button>
-                                <Action url={`/app/karyawan/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
-                            </>
-                        );
-                    }
+            { name: 'Nama' }, { name: 'J/K' }, { name: 'NIP' }, { name: 'Status Pegawai' }, { name: 'Tahun Masuk' },
 
-                }
-            }
+            Midleware() === 'admin' ?
+
+                {
+                    name: "Action",
+                    options: {
+                        filter: true,
+                        customBodyRender: (value, tableMeta, updateValue) => {
+                            return (
+                                <>
+                                    <button className="btn btn-danger btn-sm" onClick={() => {
+                                        this.delete(tableMeta.rowData[5])
+                                    }} >
+                                        Delete
+                                    </button>
+                                    <Action url={`/app/karyawan/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
+                                </>
+                            );
+                        }
+
+                    }
+                } : ''
         ]
         const options = {
             filter: true,
@@ -115,15 +123,24 @@ class Karyawan extends React.Component {
                     <>
                         <br />
                         <center>
-                            <b>Data Master Guru</b>
+
+                            {this.state.param === 'laporan' ?
+                                (<><h4 className="card-title">{`Laporan Data Tenaga Pendidik`}</h4></>) :
+                                (<><h4 className="card-title">{`Data Master Guru`}</h4> </>)}
+
+
+                            {/* <b>Data Master Guru</b> */}
                         </center>
                         <br />
-                        <NavLink
-                            to='/app/karyawan/add'
-                            className={'btn btn-primary'}
-                        >
-                            Tambah data
-    </NavLink>
+                        {Midleware() === 'admin' ?
+
+                            <NavLink
+                                to='/app/karyawan/add'
+                                className={'btn btn-primary'}
+                            >
+                                Tambah data
+                            </NavLink> : ''}
+
                     </>
 
                 }

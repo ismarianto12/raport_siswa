@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux'
 import { Helmet } from "react-helmet";
 import Action from "../../components/Action";
+import { Midleware } from "../../lib/token";
 
 class Mapel extends React.Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class Mapel extends React.Component {
     }
     componentDidMount() {
         this.fetdata()
+        console.log(Midleware(), 'level')
     }
     componentDidUpdate() {
         this.fetdata()
@@ -55,15 +57,13 @@ class Mapel extends React.Component {
     }
     render() {
 
-        // const levelakses = localStorage.getItem('token')  
         const local = localStorage.getItem('token')
         const localstorage = JSON.parse(local)
-        console.log(localstorage, 'detail local')
         const level = localstorage.level
 
-        this.array = this.state.data.map(result => [result.kode, result.mapel, result.kkm, result.nama ?? 'Kosong', result.id_mapel]);
+        this.array = this.state.data.map(result => [result.kode, result.mapel, result.kkm, result.nama ?? 'Kosong', Midleware() === 'admin' ? result.id_mapel : '']);
         const columns = [
-            { name: 'Kode' }, { name: 'mapel' }, { name: 'KKM' }, { name: 'Pengampu' }, {
+            { name: 'Kode' }, { name: 'mapel' }, { name: 'KKM' }, { name: 'Pengampu' }, Midleware() === 'admin' ? {
                 name: "Action",
                 options: {
                     filter: true,
@@ -76,7 +76,7 @@ class Mapel extends React.Component {
                                         this.delete(tableMeta.rowData[4])
                                     }} >
                                         Delete
-                            </button>
+                                    </button>
                                     <Action url={`/master/mapel/edit/${tableMeta.rowData[4]}`} title="Edit" classname="btn btn-warning btn-sm" />
                                 </>
                                 : <>
@@ -85,13 +85,13 @@ class Mapel extends React.Component {
                                         this.delete(tableMeta.rowData[4])
                                     }} >
                                         View
-                            </button>
+                                    </button>
                                 </>
                         )
                     }
 
                 }
-            }
+            } : ''
         ]
         const options = {
             filter: true,
@@ -116,17 +116,16 @@ class Mapel extends React.Component {
 
                         <>
                             <br />
-                            <b>Data Mata pelajaran</b>
+                            <b>Data Mata pelajaran {Midleware()}</b>
                             <br />
-                            {level !== 'guru' ?
-
+                            {Midleware() === 'guru' || Midleware() === 'admin' ?
                                 <>
                                     <NavLink
                                         to='/master/mapel/add'
                                         className={'btn btn-primary'}
                                     >
                                         Tambah data
-                      </NavLink>
+                                    </NavLink>
                                 </>
 
                                 : ''}

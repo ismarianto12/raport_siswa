@@ -53,7 +53,7 @@ export default function KaryawanForm() {
     }
 
     const options = ['Pria', 'Wanita'];
-    const status_peg = ['PNS', 'HONORER'];
+    const status_peg = ['PNS', 'HONORER', 'KEPALA SEKOLAH'];
 
     return (
         <>
@@ -84,7 +84,6 @@ export default function KaryawanForm() {
                     }
                     axios(options)
                         .then(response => {
-                            // navigate('/master/pegawai')
                             navigate('/app/karyawan')
 
                         }).catch(function (error) {
@@ -141,11 +140,11 @@ export default function KaryawanForm() {
                                                 as={Autocomplete}
                                                 margin="normal"
                                                 fullWidth
-                                                name="status_peg"
                                                 onChange={(e, val) => {
                                                     setStatus(val)
                                                 }
                                                 }
+                                                name="status_pegawai"
                                                 value={status}
                                                 id="controllable-states-demo"
                                                 options={status_peg}
@@ -232,8 +231,8 @@ export default function KaryawanForm() {
                                         // sx={{ mt: 5, mb: 2 }}
                                         >
                                             Simpan data
-            </Button>
-&nbsp;
+                                        </Button>
+                                        &nbsp;
                                         <Button
                                             type="submit"
                                             // fullWidth
@@ -242,7 +241,7 @@ export default function KaryawanForm() {
                                             variant="contained"
                                         >
                                             Batal
-            </Button>
+                                        </Button>
                                     </Container>
                                 </div>
                             </Form>

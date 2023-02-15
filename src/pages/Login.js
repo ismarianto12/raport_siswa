@@ -56,12 +56,11 @@ export default function Login() {
         })
     }
     return (
-        <div className="container-fluid ps-md-0">
+        <div className="contain er-fluid ps-md-0">
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Login</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
+             </Helmet>
             <div className="row g-0">
                 <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image" style={divStyleright} />
                 <div className="col-md-8 col-lg-6" style={divStyle}>
@@ -76,7 +75,6 @@ export default function Login() {
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-floating mb-3">
                                             <input type="text" className="form-control" id="username" onChange={onChange} value={value.username} placeholder="" />
-                                            {/* <label htmlFor="floatingInput">Username</label> */}
                                         </div>
                                         <div className="form-floating mb-3">
                                             <input type="password" className="form-control" id="password" onChange={onChange} value={value.password} placeholder="Password" />

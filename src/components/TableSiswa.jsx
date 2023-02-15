@@ -10,6 +10,7 @@ import {
 } from '../actions/Siswa'
 import { connect } from 'react-redux'
 import Action from './Action'
+import { Midleware } from "../lib/token";
 
 
 class TableSiswa extends React.Component {
@@ -55,9 +56,11 @@ class TableSiswa extends React.Component {
     }
     render() {
 
-        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk, result.id]);
+        this.array = this.state.data.map(result => [result.nama, result.jk, result.nisn, result.kelas, result.tahun_masuk,
+        Midleware() === 'admin' ?
+            result.id : '']);
         const columns = [
-            { name: 'Nama' }, { name: 'J/K' }, { name: 'NISN' }, { name: 'Kelas' }, { name: 'Tahun Masuk' }, {
+            { name: 'Nama' }, { name: 'J/K' }, { name: 'NISN' }, { name: 'Kelas' }, { name: 'Tahun Masuk' }, Midleware() === 'admin' ? {
                 name: "Action",
                 options: {
                     filter: true,
@@ -68,14 +71,14 @@ class TableSiswa extends React.Component {
                                     this.delete(tableMeta.rowData[5])
                                 }} >
                                     Delete
-                            </button>
+                                </button>
                                 <Action url={`/master/siswa/edit/${tableMeta.rowData[5]}`} title="Edit" classname="btn btn-warning btn-sm" />
                             </>
                         );
                     }
 
                 }
-            }
+            } : ''
         ]
         const options = {
             filter: true,

@@ -6,15 +6,11 @@ function getToken() {
     return level
 }
 
-async function Midleware() {
-    const local = await localStorage.getItem('token')
+const Midleware = () => {
+    const local = localStorage.getItem('token')
     const localstorage = JSON.parse(local)
     const level = localstorage.level
     const token = level
-    if (token === '') {
-        return
-    } else {
-        // redirect auth page
-    }
+    return token
 }
 export { getToken, Midleware }
